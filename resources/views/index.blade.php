@@ -33,15 +33,62 @@
             </div>
         </div>
         <!-- Featured Abstract Visual -->
-        <div class="relative mt-16 w-full max-w-6xl mx-auto rounded-xl overflow-hidden aspect-[21/9] shadow-2xl group">
-            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10"></div>
-            <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                data-alt="Abstract geometric shapes in high contrast black and white with neon yellow accents"
-                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAirr9fJ4-b9EITGljrRFdrkyMGSeVS0mLd1b2o2FoTbv6S97bxXQW1diR3Z_qhr2OCQJQcHwwgf1NzOgtKP1ZrHpZX-fjnl5aK2E-7DfcAGW7-3Lr2Y_iYFxV1MgOBXFHvo2W7p33h4g7lcWPr_3kH2_x4g0D-b99eOmzNLJbpY5sJuK6hd-xPwOQi9Kw2Y24KM9XhMUSkSa6-o67WQgrL9dTWgxzERLW7-qD7_72EE5vSnn5zT9Ec1OZqbBGfDRA6JYlYxvWZBoU');">
-            </div>
-            <div class="absolute bottom-8 left-8 z-20">
-                <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
-                <h3 class="text-white text-3xl font-bold">TechFlow Rebrand</h3>
+        <div class="relative mt-16 w-full max-w-6xl mx-auto">
+            <div class="relative rounded-xl overflow-hidden aspect-[21/9] shadow-2xl group"
+                data-hero-carousel>
+                <div
+                    class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10 pointer-events-none">
+                </div>
+                <div
+                    class="absolute inset-0 transition-opacity duration-700 ease-out opacity-100 z-20"
+                    data-hero-slide>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                        data-alt="Abstract geometric shapes in high contrast black and white with neon yellow accents"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAirr9fJ4-b9EITGljrRFdrkyMGSeVS0mLd1b2o2FoTbv6S97bxXQW1diR3Z_qhr2OCQJQcHwwgf1NzOgtKP1ZrHpZX-fjnl5aK2E-7DfcAGW7-3Lr2Y_iYFxV1MgOBXFHvo2W7p33h4g7lcWPr_3kH2_x4g0D-b99eOmzNLJbpY5sJuK6hd-xPwOQi9Kw2Y24KM9XhMUSkSa6-o67WQgrL9dTWgxzERLW7-qD7_72EE5vSnn5zT9Ec1OZqbBGfDRA6JYlYxvWZBoU');">
+                    </div>
+                    <div class="absolute bottom-8 left-8 z-20">
+                        <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
+                        <h3 class="text-white text-3xl font-bold">TechFlow Rebrand</h3>
+                    </div>
+                </div>
+                <div
+                    class="absolute inset-0 transition-opacity duration-700 ease-out opacity-0 pointer-events-none z-0"
+                    data-hero-slide>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                        data-alt="Glass architectural detail with soft gradients and shadows"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9Xkvu4r52QhhXjfzeW8ozjuZFF0g0sHxJElY4gXoDgv5e-xt0M5t1B7_zMnOq86I2ljVf0bLm9-3UG3O4gU5nrgi-o2L-d5mFzwv25Z-31yECBDyGQzLHtEmfdoH8NjZ4aqdMmzJf66id4WACb0iEwn-OAx2M1CUaaNmlbUZYQ8uH0p8zeSt5YEtv5U1nK1Cq9gH3uLvg_hDuhbzcYAV8dLTpNh31N_yaTN6M3IC1R3p7IcBqBAU6ZNr6lcLXh7urc6oNnlG5peAw');">
+                    </div>
+                    <div class="absolute bottom-8 left-8 z-20">
+                        <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
+                        <h3 class="text-white text-3xl font-bold">Lumen Spaces</h3>
+                    </div>
+                </div>
+                <div
+                    class="absolute inset-0 transition-opacity duration-700 ease-out opacity-0 pointer-events-none z-0"
+                    data-hero-slide>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                        data-alt="Minimal device mockup with soft lighting and product UI"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjmS4tVFLkRn9xAiSaoBAMFYb0WHf-RV1Kp08hu4WCbDt3gJw0NvRmUQ3U3ltiDjKdpq0f3EmL4v3PDAtaS7Zp2lfYkwoOEXAAx9AaAGQti5ImnflYVaxPXywB_GQ1seXP3-0bDY0NkWVo9hF_6GIR7KHz5G5fnAv2eAZaP2rbzRFm-M-mN9KZhVe3bku6BI6K_k_-S39Fea21BMvkYgXq6l1QASSMmrNVkgP7UpXw9kRI0RmAcC1K5pyPtKybSkQ2e9JzhEcKdeZE');">
+                    </div>
+                    <div class="absolute bottom-8 left-8 z-20">
+                        <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
+                        <h3 class="text-white text-3xl font-bold">Pulse Interface</h3>
+                    </div>
+                </div>
+                <button
+                    class="hidden md:flex items-center justify-center absolute left-4 top-1/2 -translate-y-1/2 size-12 rounded-full bg-white/10 text-white border border-white/30 backdrop-blur-sm hover:bg-white/20 transition-colors z-30"
+                    type="button"
+                    aria-label="Previous slide"
+                    data-hero-prev>
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <button
+                    class="hidden md:flex items-center justify-center absolute right-4 top-1/2 -translate-y-1/2 size-12 rounded-full bg-white/10 text-white border border-white/30 backdrop-blur-sm hover:bg-white/20 transition-colors z-30"
+                    type="button"
+                    aria-label="Next slide"
+                    data-hero-next>
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
             </div>
         </div>
     </section>
