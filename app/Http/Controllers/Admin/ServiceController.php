@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Service\StoreService;
+use App\Http\Requests\Service\UpdateService;
 use App\Models\Project;
 use App\Models\Service;
 use App\Services\ServiceService;
-use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
@@ -31,9 +32,9 @@ class ServiceController extends Controller
         return view('admin.services.form', compact('projects'));
     }
 
-    public function store(Request $request)
+    public function store(StoreService $request)
     {
-        $validated = $this->validateRequest($request);
+        $validated = $request->validated();
 
         $projectIds = $validated['projects'] ?? [];
         unset($validated['projects']);
@@ -52,9 +53,9 @@ class ServiceController extends Controller
         return view('admin.services.form', compact('service', 'projects'));
     }
 
-    public function update(Request $request, Service $service)
+    public function update(UpdateService $request, Service $service)
     {
-        $validated = $this->validateRequest($request, $service);
+        $validated = $request->validated();
 
         $projectIds = $validated['projects'] ?? [];
         unset($validated['projects']);
@@ -73,19 +74,4 @@ class ServiceController extends Controller
             ->with('success', 'Servicio eliminado correctamente.');
     }
 
-    private function validateRequest(Request $request, ?Service $service = null): array
-    {
-        $serviceId = $service?->id;
-
-        return $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:services,slug,' . $serviceId,
-            'description' => 'nullable|string',
-            'icon' => 'nullable|string|max:255',
-            'is_active' => 'nullable|boolean',
-            'sort_order' => 'nullable|integer|min:0',
-            'projects' => 'nullable|array',
-            'projects.*' => 'integer|exists:projects,id',
-        ]);
-    }
 }
