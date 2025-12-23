@@ -3,14 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HeroSlide\StoreHeroSlide;
+use App\Http\Requests\HeroSlide\UpdateHeroSlide;
 use Illuminate\Http\Request;
 use App\Models\HeroSlide;
+use Illuminate\Support\Facades\Storage;
+use App\Services\HeroSlide\HeroSlideService;
 
 class HeroSlideController extends Controller
 {
+    public function __construct(protected HeroSlideService $heroSlideService)
+    {}
+
     public function index()
     {
-        $heroSlides = HeroSlide::all();
+        $heroSlides = $this->heroSlideService->getHeroSlides();
 
         return view('admin.hero_slides.index', compact('heroSlides'));
     }
@@ -20,34 +27,13 @@ class HeroSlideController extends Controller
         return view('admin.hero_slides.form');
     }
 
-    public function store(Request $request)
+    public function store(StoreHeroSlide $request)
     {
-        // dd($request->all());
-        // validación
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            // 'image_url' => 'required|url',
-            'cta_text' => 'nullable|string|max:100',
-            // 'cta_link' => 'nullable|url',
-        ]);
+        $file = $request->file('image_path');
 
-        // dd($validated);
-
-        if (!$validated) {
-            return redirect()->back()->withErrors($validated)->withInput();
-        }
-
-        // if ($request->hasFile('image_url')) {
-        //     $path = $request->file('image_url')->store('hero_slides', 'public');
-        //     $validated['image_url'] = '/storage/' . $path;
-        // }
-
-        HeroSlide::create($validated);
+        $this->heroSlideService->store($request->validated(), $file);
 
         return redirect()->route('admin.hero_slides.index')->with('success', 'Hero slide created successfully.');
-
-
     }
 
     public function edit(HeroSlide $heroSlide)
@@ -57,26 +43,18 @@ class HeroSlideController extends Controller
         ]);
     }
 
-    public function update(Request $request, HeroSlide $heroSlide)
+    public function update(UpdateHeroSlide $request, HeroSlide $heroSlide)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'cta_text' => 'nullable|string|max:100',
-        ]);
+        $file = $request->file('image_path');
 
-        if (!$validated) {
-            return redirect()->back()->withErrors($validated)->withInput();
-        }
-
-        $heroSlide->update($validated);
+        $this->heroSlideService->update($heroSlide, $request->validated(), $file);
 
         return redirect()->route('admin.hero_slides.index')->with('success', 'Hero slide updated successfully.');
     }
 
     public function destroy(HeroSlide $heroSlide)
     {
-        $heroSlide->delete();
+        $this->heroSlideService->destroy($heroSlide);
 
         return redirect()->route('admin.hero_slides.index')->with('success', 'Hero slide deleted successfully.');
     }

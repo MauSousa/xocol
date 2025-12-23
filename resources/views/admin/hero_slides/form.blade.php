@@ -23,13 +23,13 @@
         </div>
     @endif
 
-    <form
-        action="{{ isset($heroSlide) ?
-            route('admin.hero_slides.update', ['heroSlide' => $heroSlide]) :
-            route('admin.hero_slides.store')
-            }}"
+    <form action="{{ isset($heroSlide) ?
+            route('admin.hero_slides.update', $heroSlide) :
+            route('admin.hero_slides.store') }}"
         method="POST"
-        enctype="multipart/form-data"class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+        enctype="multipart/form-data"
+        class="bg-white dark:bg-gray-800 shadow rounded-lg p-6"
+    >
         @csrf
 
         @if (isset($heroSlide))
@@ -44,9 +44,9 @@
                    text-gray-900 dark:text-gray-100  py-2">
         </div>
 
-        {{-- <div class="mb-4">
-            <label for="image_url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen</label>
-            <input type="file" name="image_url" id="image_url"
+        <div class="mb-4">
+            <label for="image_path" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen</label>
+            <input type="file" name="image_path" id="image_path"
                    class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100
                    file:mr-4 file:py-2 file:px-4
                    file:rounded-md file:border-0
@@ -54,7 +54,7 @@
                    file:bg-indigo-600 file:text-white
                    hover:file:bg-indigo-700"
                    required>
-        </div> --}}
+        </div>
 
         <div class="mb-4">
             <label for="cta_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Texto del CTA</label>

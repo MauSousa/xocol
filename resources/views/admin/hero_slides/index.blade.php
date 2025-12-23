@@ -32,19 +32,27 @@
                     <tr class="border-b dark:border-gray-700">
                         <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">{{ $slide->title }}</td>
                         <td class="px-4 py-3">
-                            <img src="https://via.placeholder.com/150" alt="Imagen del Hero Slide" class="w-24 h-auto rounded">
+                            <img src="{{ $slide->image_path }}" alt="Imagen del Hero Slide" class="w-24 h-auto rounded">
                         </td>
                         <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
                             {{ $slide->cta_text }}
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            <span
-                                class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Activo</span>
+                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                {{ $slide->is_active ?? 'Activo' }}
+                            </span>
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            <ahref="{{ route('admin.hero_slides.edit', ['heroSlide' => $slide]) }}"
-                            class="text-indigo-600 hover:text-indigo-800 font-medium mr-4">Editar</ahref=>
-                            <form action="{{ route('admin.hero_slides.destroy', ['heroSlide' => $slide]) }}" method="POST" class="inline">
+                            <a href="{{ route('admin.hero_slides.edit', $slide) }}"
+                                class="text-indigo-600 hover:text-indigo-800 font-medium mr-4"
+                            >
+                                Editar
+                            </a>
+                            <form
+                                action="{{ route('admin.hero_slides.destroy', $slide) }}"
+                                method="POST"
+                                class="inline"
+                            >
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-800 font-medium"
