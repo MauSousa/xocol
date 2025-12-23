@@ -12,6 +12,9 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link
+        href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css"
+        rel="stylesheet" />
+    <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -114,6 +117,20 @@
             <p class="text-sm text-gray-400">© 2024 XOCOL Agency. All rights reserved.</p>
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousel = document.querySelector("[data-hero-carousel]");
+            if (!carousel || typeof Glide === "undefined") return;
+
+            new Glide(carousel, {
+                type: "carousel",
+                autoplay: 5000,
+                animationDuration: 700,
+                hoverpause: true,
+            }).mount();
+        });
+    </script>
 </body>
 
 </html>
