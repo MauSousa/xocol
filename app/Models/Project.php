@@ -15,8 +15,10 @@ class Project extends Model
         'slug',
         'content',
         'cover_image',
+        'gallery_images',
         'published_at',
         'is_active',
+        'is_featured',
         'views_count',
         'likes_count',
     ];
@@ -24,6 +26,8 @@ class Project extends Model
     protected $casts = [
         'published_at' => 'datetime',
         'is_active' => 'boolean',
+        'is_featured' => 'boolean',
+        'gallery_images' => 'array',
     ];
 
     public function services()

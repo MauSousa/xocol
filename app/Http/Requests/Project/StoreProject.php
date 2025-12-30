@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Requests\Project;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreProject extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:projects,slug',
+            'content' => 'nullable|string',
+            'cover_image' => 'nullable|image|max:5120',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*' => 'image|max:5120',
+            'published_at' => 'nullable|date',
+            'is_active' => 'nullable|boolean',
+            'is_featured' => 'nullable|boolean',
+            'services' => 'nullable|array',
+            'services.*' => 'integer|exists:services,id',
+        ];
+    }
+}
