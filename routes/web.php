@@ -3,6 +3,7 @@
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 
 Route::get('/welcome', function () {
@@ -31,6 +32,7 @@ Route::prefix('admin')
     Route::delete('hero-slides/{heroSlide}', [HeroSlideController::class, 'destroy'])->name('hero_slides.destroy');
 
     Route::resource('services', ServiceController::class)->except(['show']);
+    Route::resource('projects', ProjectController::class)->except(['show']);
 
 });
 
