@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Project;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -17,19 +18,32 @@ class ProjectService
         array $serviceIds = []
     ): Project {
         $payload = $this->normalizePayload($data);
+        $storedCover = null;
+        $storedGallery = [];
 
         if ($coverImage) {
-            $payload['cover_image'] = $this->storeImage($coverImage, 'projects/cover');
+            $storedCover = $this->storeImage($coverImage, 'projects/cover');
+            $payload['cover_image'] = $storedCover;
         }
 
         if ($galleryImages) {
-            $payload['gallery_images'] = $this->storeGalleryImages($galleryImages);
+            $storedGallery = $this->storeGalleryImages($galleryImages);
+            $payload['gallery_images'] = $storedGallery;
         }
 
-        $project = Project::create($payload);
-        $project->services()->sync($serviceIds);
+        try {
+            return DB::transaction(function () use ($payload, $serviceIds) {
+                $project = Project::create($payload);
+                $project->services()->sync($serviceIds);
 
-        return $project;
+                return $project;
+            });
+        } catch (\Throwable $exception) {
+            $this->deleteImage($storedCover);
+            $this->deleteImages($storedGallery);
+
+            throw $exception;
+        }
     }
 
     public function update(
@@ -42,36 +56,59 @@ class ProjectService
         array $removeGalleryImages = []
     ): Project {
         $payload = $this->normalizePayload($data, $project);
+        $storedCover = null;
+        $storedGallery = [];
 
         if ($coverImage) {
-            $this->deleteImage($project->cover_image);
-            $payload['cover_image'] = $this->storeImage($coverImage, 'projects/cover');
+            $storedCover = $this->storeImage($coverImage, 'projects/cover');
+            $payload['cover_image'] = $storedCover;
         }
 
         $currentGalleryImages = $existingGalleryImages ?: ($project->gallery_images ?? []);
         $filteredGalleryImages = array_values(array_diff($currentGalleryImages, $removeGalleryImages));
+        $storedGallery = $galleryImages ? $this->storeGalleryImages($galleryImages) : [];
+        $payload['gallery_images'] = array_values(array_merge($filteredGalleryImages, $storedGallery));
 
-        if ($removeGalleryImages) {
-            $this->deleteImages($removeGalleryImages);
+        $oldCover = $project->cover_image;
+        $toRemoveGallery = $removeGalleryImages;
+
+        try {
+            $updatedProject = DB::transaction(function () use ($project, $payload, $serviceIds) {
+                $project->update($payload);
+                $project->services()->sync($serviceIds);
+
+                return $project;
+            });
+        } catch (\Throwable $exception) {
+            $this->deleteImage($storedCover);
+            $this->deleteImages($storedGallery);
+
+            throw $exception;
         }
 
-        $newGalleryImages = $galleryImages ? $this->storeGalleryImages($galleryImages) : [];
-        $payload['gallery_images'] = array_values(array_merge($filteredGalleryImages, $newGalleryImages));
+        if ($storedCover) {
+            $this->deleteImage($oldCover);
+        }
 
-        $project->update($payload);
-        $project->services()->sync($serviceIds);
+        if ($toRemoveGallery) {
+            $this->deleteImages($toRemoveGallery);
+        }
 
-        return $project;
+        return $updatedProject;
     }
 
     public function delete(Project $project): void
     {
-        $project->services()->detach();
+        $coverImage = $project->cover_image;
+        $galleryImages = $project->gallery_images ?? [];
 
-        $this->deleteImage($project->cover_image);
-        $this->deleteImages($project->gallery_images ?? []);
+        DB::transaction(function () use ($project) {
+            $project->services()->detach();
+            $project->delete();
+        });
 
-        $project->delete();
+        $this->deleteImage($coverImage);
+        $this->deleteImages($galleryImages);
     }
 
     private function normalizePayload(array $data, ?Project $project = null): array
@@ -86,7 +123,7 @@ class ProjectService
         ]);
 
         if (empty($payload['slug']) && !empty($payload['title'])) {
-            $payload['slug'] = Str::slug($payload['title']);
+            $payload['slug'] = $this->generateUniqueSlug($payload['title'], $project);
         }
 
         if ($project && empty($payload['slug']) && $project->slug) {
@@ -116,6 +153,28 @@ class ProjectService
         }
 
         return $images;
+    }
+
+    private function generateUniqueSlug(string $title, ?Project $project = null): string
+    {
+        $base = Str::slug($title);
+        $slug = $base;
+        $counter = 1;
+
+        while ($this->slugExists($slug, $project)) {
+            $slug = $base . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    private function slugExists(string $slug, ?Project $project = null): bool
+    {
+        return Project::query()
+            ->where('slug', $slug)
+            ->when($project, fn ($query) => $query->where('id', '!=', $project->id))
+            ->exists();
     }
 
     private function deleteImage(?string $path): void
