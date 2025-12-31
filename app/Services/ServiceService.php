@@ -8,6 +8,14 @@ use Illuminate\Support\Str;
 
 class ServiceService
 {
+    public function list()
+    {
+        return Service::with('projects')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+    }
+
     public function create(array $data, array $projectIds = []): Service
     {
         $payload = $this->normalizePayload($data);

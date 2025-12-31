@@ -17,10 +17,7 @@ class ProjectController extends Controller
 
     public function index()
     {
-        $projects = Project::with('services')
-            ->orderByDesc('published_at')
-            ->orderBy('title')
-            ->get();
+        $projects = $this->projectService->list();
 
         return view('admin.projects.index', compact('projects'));
     }

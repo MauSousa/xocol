@@ -281,84 +281,34 @@
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl font-bold tracking-tight mb-16 text-center">What Clients Say</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div
-                    class="bg-white dark:bg-[#1a190b] p-8 rounded-lg shadow-sm border border-[#e9e8ce] dark:border-[#3a392a] flex flex-col justify-between">
-                    <div>
-                        <div class="flex gap-1 text-primary mb-6">
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                        </div>
-                        <p class="text-lg italic text-gray-700 dark:text-gray-300 leading-relaxed mb-6">"XOCOL
-                            transformed our digital presence completely. Their strategic approach to our rebrand
-                            increased our leads by 40% in the first month."</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="size-12 rounded-full bg-gray-300 bg-cover bg-center"
-                            data-alt="Portrait of Sarah Johnson, CEO"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYkO4HTWnUxDrIUKjxJC8HQlGCiEPuFurXJClM4Fkfp1ARTdSyEDcOX0XIuofvtgxhZl2Bh_OTU5NDVL9WRXXRqpnzqnymDKjsNfsjLijldG6nI_L-zVii3S8LCr3M6V3lMggvPgJeQfBJLlTNEJmmFOPLOnmwQUWMYHlVem4Ckc10QVDnMRPonTZch9aYBxxhJOYjQgdcF4P_xlgAc4lVImv0w91jDTSzwRd3qZZzXxB8nEI6E5WliGWrw6Xh2Owm_RhStFIxXHE');">
-                        </div>
+                @forelse ($testimonials as $testimonial)
+                    <div
+                        class="bg-white dark:bg-[#1a190b] p-8 rounded-lg shadow-sm border border-[#e9e8ce] dark:border-[#3a392a] flex flex-col justify-between">
                         <div>
-                            <p class="font-bold text-sm">Sarah Johnson</p>
-                            <p class="text-xs text-gray-500">CEO, TechFlow</p>
+                            <div class="flex gap-1 text-primary mb-6">
+                                @for ($star = 0; $star < max(1, min(5, $testimonial->rating)); $star++)
+                                    <span class="material-symbols-outlined fill-current">star</span>
+                                @endfor
+                            </div>
+                            <p class="text-lg italic text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                                "{{ $testimonial->quote }}"
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="size-12 rounded-full bg-gray-300 bg-cover bg-center"
+                                style="background-image: url('{{ $testimonial->avatar_url }}');">
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm">{{ $testimonial->author_name }}</p>
+                                <p class="text-xs text-gray-500">{{ $testimonial->author_title }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Testimonial 2 -->
-                <div
-                    class="bg-white dark:bg-[#1a190b] p-8 rounded-lg shadow-sm border border-[#e9e8ce] dark:border-[#3a392a] flex flex-col justify-between">
-                    <div>
-                        <div class="flex gap-1 text-primary mb-6">
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                        </div>
-                        <p class="text-lg italic text-gray-700 dark:text-gray-300 leading-relaxed mb-6">"The web
-                            development team is top-notch. They delivered a complex e-commerce platform ahead of
-                            schedule with flawless execution."</p>
+                @empty
+                    <div class="col-span-full text-center text-gray-500">
+                        No testimonials available yet.
                     </div>
-                    <div class="flex items-center gap-4">
-                        <div class="size-12 rounded-full bg-gray-300 bg-cover bg-center"
-                            data-alt="Portrait of Michael Chen, Founder"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpKEcpXJHm1ll8zvQF07KWZ8-ZNIDDeVjNrGgUl7c2xum24vo-koErM6FBARA91_yuTZotV8qPUH4gd935NMUSJHPku1QjtA1tc65RSEmb89GHPSPpyw99QtqFh3phz539E-D6ddrxYy0ETXCNUvwDu2FoNmws2COLwAlJVoY-3b8gjz-ZjCIEJIKJR11ByYEKNAwTjazWpxP-wDTrsGjiscUZhR3BQdWQD84h6BcFd98fAI_RCodewHMWgH6q8AA2nPe1k8Xp5Tc');">
-                        </div>
-                        <div>
-                            <p class="font-bold text-sm">Michael Chen</p>
-                            <p class="text-xs text-gray-500">Founder, Urban Coffee</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Testimonial 3 -->
-                <div
-                    class="bg-white dark:bg-[#1a190b] p-8 rounded-lg shadow-sm border border-[#e9e8ce] dark:border-[#3a392a] flex flex-col justify-between">
-                    <div>
-                        <div class="flex gap-1 text-primary mb-6">
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                            <span class="material-symbols-outlined fill-current">star</span>
-                        </div>
-                        <p class="text-lg italic text-gray-700 dark:text-gray-300 leading-relaxed mb-6">"Creative,
-                            responsive, and data-driven. XOCOL isn't just an agency, they are a partner in our growth
-                            strategy."</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="size-12 rounded-full bg-gray-300 bg-cover bg-center"
-                            data-alt="Portrait of Elena Rodriguez, Marketing Director"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2mcMwiRvV46xTj3wOkFbJP2VGihD7jXa5Zt4rgrZkLzwGhpjkbt73vBXDk5UhrXggZ1fiiu9GKu1DQoijsx8C9jLkKt--nAnMiY_kvtfpIYfVZuKXI4dp1lBHCuVVlW7p85zqe0s9SMIstneeIpCgXo7QIFi7xRUZDODVYhW0f7MPk5luvZCApX-uXyQL4BClAAyBnRdFABxOFvMOHRgM5RI2XiO4Ksdpib_A2nDdgOWIWZSDHVWBV5ujsGn9at7hkCKGqKIQLwk');">
-                        </div>
-                        <div>
-                            <p class="font-bold text-sm">Elena Rodriguez</p>
-                            <p class="text-xs text-gray-500">CMO, Solaris</p>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
