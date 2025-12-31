@@ -1,18 +1,18 @@
 <?php
 
 use App\Http\Controllers\Settings;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\TestimonialController;
 
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 
 
@@ -33,6 +33,7 @@ Route::prefix('admin')
 
     Route::resource('services', ServiceController::class)->except(['show']);
     Route::resource('projects', ProjectController::class)->except(['show']);
+    Route::resource('testimonials', TestimonialController::class)->except(['show']);
 
 });
 

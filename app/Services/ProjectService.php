@@ -11,6 +11,14 @@ use Illuminate\Support\Str;
 
 class ProjectService
 {
+    public function list()
+    {
+        return Project::with('services')
+            ->orderByDesc('published_at')
+            ->orderBy('title')
+            ->get();
+    }
+
     public function create(
         array $data,
         ?UploadedFile $coverImage = null,

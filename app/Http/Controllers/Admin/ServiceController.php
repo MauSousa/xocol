@@ -17,10 +17,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $services = Service::with('projects')
-            ->orderBy('sort_order')
-            ->orderBy('name')
-            ->get();
+        $services = $this->serviceService->list();
 
         return view('admin.services.index', compact('services'));
     }
