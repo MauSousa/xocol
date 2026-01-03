@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ServiceSeeder;
 use Database\Seeders\TestimonialSeeder;
+use Database\Seeders\HeroSlideSeeder;
+use Database\Seeders\ProjectSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +25,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(ServiceSeeder::class);
+        $this->call(ProjectSeeder::class);
+        $this->call(HeroSlideSeeder::class);
         $this->call(TestimonialSeeder::class);
     }
 }

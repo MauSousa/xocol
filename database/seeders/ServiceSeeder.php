@@ -11,21 +11,41 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         $services = [
-            'Identidad & Branding',
-            'Estrategia Digital',
-            'Marketing Digital',
-            'Desarrollo Web',
+            [
+                'name' => 'Branding & Identity',
+                'description' => 'Creating memorable visual systems that tell your unique story.',
+                'icon' => 'palette',
+                'sort_order' => 1,
+            ],
+            [
+                'name' => 'Digital Strategy',
+                'description' => 'Data-driven growth plans to position your brand effectively.',
+                'icon' => 'lightbulb',
+                'sort_order' => 2,
+            ],
+            [
+                'name' => 'Digital Marketing',
+                'description' => 'Performance campaigns that convert traffic into loyal customers.',
+                'icon' => 'monitoring',
+                'sort_order' => 3,
+            ],
+            [
+                'name' => 'Web Development',
+                'description' => 'Custom websites and apps built for speed, scale, and performance.',
+                'icon' => 'code',
+                'sort_order' => 4,
+            ],
         ];
 
-        foreach ($services as $index => $name) {
+        foreach ($services as $service) {
             Service::updateOrCreate(
-                ['slug' => Str::slug($name)],
+                ['slug' => Str::slug($service['name'])],
                 [
-                    'name' => $name,
-                    'description' => 'Servicio base de XOCOL.',
-                    'icon' => null,
+                    'name' => $service['name'],
+                    'description' => $service['description'],
+                    'icon' => $service['icon'],
                     'is_active' => true,
-                    'sort_order' => $index + 1,
+                    'sort_order' => $service['sort_order'],
                 ]
             );
         }

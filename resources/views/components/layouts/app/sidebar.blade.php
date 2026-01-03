@@ -15,6 +15,8 @@
                                 :active="request()->routeIs('admin.services*')">Servicios</x-layouts.sidebar-link>
                             <x-layouts.sidebar-link href="{{ route('admin.projects.index') }}" icon="fas-folder-open"
                                 :active="request()->routeIs('admin.projects*')">Proyectos</x-layouts.sidebar-link>
+                            <x-layouts.sidebar-link href="{{ route('admin.testimonials.index') }}" icon="fas-message"
+                                :active="request()->routeIs('admin.testimonials*')">Testimonios</x-layouts.sidebar-link>
                         </ul>
                     </nav>
                 </div>
