@@ -41,36 +41,28 @@
                 </div>
                 <div class="glide__track h-full" data-glide-el="track">
                     <div class="glide__slides h-full">
-                        <div class="glide__slide relative h-full">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                data-alt="Abstract geometric shapes in high contrast black and white with neon yellow accents"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAirr9fJ4-b9EITGljrRFdrkyMGSeVS0mLd1b2o2FoTbv6S97bxXQW1diR3Z_qhr2OCQJQcHwwgf1NzOgtKP1ZrHpZX-fjnl5aK2E-7DfcAGW7-3Lr2Y_iYFxV1MgOBXFHvo2W7p33h4g7lcWPr_3kH2_x4g0D-b99eOmzNLJbpY5sJuK6hd-xPwOQi9Kw2Y24KM9XhMUSkSa6-o67WQgrL9dTWgxzERLW7-qD7_72EE5vSnn5zT9Ec1OZqbBGfDRA6JYlYxvWZBoU');">
+                        @forelse ($heroSlides as $slide)
+                            <div class="glide__slide relative h-full">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                                    data-alt="{{ $slide->title }}"
+                                    style="background-image: url('{{ $slide->image_path }}');">
+                                </div>
+                                <div class="absolute bottom-8 left-8 z-20">
+                                    <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">
+                                        {{ $slide->subtitle ?: 'Featured Project' }}
+                                    </p>
+                                    <h3 class="text-white text-3xl font-bold">{{ $slide->title }}</h3>
+                                </div>
                             </div>
-                            <div class="absolute bottom-8 left-8 z-20">
-                                <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
-                                <h3 class="text-white text-3xl font-bold">TechFlow Rebrand</h3>
+                        @empty
+                            <div class="glide__slide relative h-full">
+                                <div class="absolute inset-0 bg-gray-900"></div>
+                                <div class="absolute bottom-8 left-8 z-20">
+                                    <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
+                                    <h3 class="text-white text-3xl font-bold">XOCOL Studio</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="glide__slide relative h-full">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                data-alt="Glass architectural detail with soft gradients and shadows"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9Xkvu4r52QhhXjfzeW8ozjuZFF0g0sHxJElY4gXoDgv5e-xt0M5t1B7_zMnOq86I2ljVf0bLm9-3UG3O4gU5nrgi-o2L-d5mFzwv25Z-31yECBDyGQzLHtEmfdoH8NjZ4aqdMmzJf66id4WACb0iEwn-OAx2M1CUaaNmlbUZYQ8uH0p8zeSt5YEtv5U1nK1Cq9gH3uLvg_hDuhbzcYAV8dLTpNh31N_yaTN6M3IC1R3p7IcBqBAU6ZNr6lcLXh7urc6oNnlG5peAw');">
-                            </div>
-                            <div class="absolute bottom-8 left-8 z-20">
-                                <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
-                                <h3 class="text-white text-3xl font-bold">Lumen Spaces</h3>
-                            </div>
-                        </div>
-                        <div class="glide__slide relative h-full">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                data-alt="Minimal device mockup with soft lighting and product UI"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjmS4tVFLkRn9xAiSaoBAMFYb0WHf-RV1Kp08hu4WCbDt3gJw0NvRmUQ3U3ltiDjKdpq0f3EmL4v3PDAtaS7Zp2lfYkwoOEXAAx9AaAGQti5ImnflYVaxPXywB_GQ1seXP3-0bDY0NkWVo9hF_6GIR7KHz5G5fnAv2eAZaP2rbzRFm-M-mN9KZhVe3bku6BI6K_k_-S39Fea21BMvkYgXq6l1QASSMmrNVkgP7UpXw9kRI0RmAcC1K5pyPtKybSkQ2e9JzhEcKdeZE');">
-                            </div>
-                            <div class="absolute bottom-8 left-8 z-20">
-                                <p class="text-white text-sm font-medium uppercase tracking-widest mb-2">Featured Project</p>
-                                <h3 class="text-white text-3xl font-bold">Pulse Interface</h3>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
                 <div class="glide__arrows absolute inset-0 z-30 pointer-events-none" data-glide-el="controls">
@@ -109,62 +101,24 @@
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Service 1 -->
-                <div
-                    class="group relative p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                @forelse ($services as $service)
                     <div
-                        class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
-                        <span class="material-symbols-outlined">palette</span>
+                        class="group relative p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <div
+                            class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
+                            <span class="material-symbols-outlined">{{ $service->icon ?? 'star' }}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">{{ $service->name }}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">{{ $service->description }}</p>
+                        <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Branding &amp; Identity</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Creating memorable visual systems that tell
-                        your unique story.</p>
-                    <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
+                @empty
+                    <div class="col-span-full text-center text-gray-500">
+                        No services available yet.
                     </div>
-                </div>
-                <!-- Service 2 -->
-                <div
-                    class="group relative p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <div
-                        class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
-                        <span class="material-symbols-outlined">lightbulb</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Digital Strategy</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Data-driven growth plans to position your
-                        brand effectively.</p>
-                    <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
-                    </div>
-                </div>
-                <!-- Service 3 -->
-                <div
-                    class="group relative p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <div
-                        class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
-                        <span class="material-symbols-outlined">monitoring</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Digital Marketing</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Performance campaigns that convert traffic
-                        into loyal customers.</p>
-                    <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
-                    </div>
-                </div>
-                <!-- Service 4 -->
-                <div
-                    class="group relative p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <div
-                        class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
-                        <span class="material-symbols-outlined">code</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Web Development</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Custom websites and apps built for speed,
-                        scale, and performance.</p>
-                    <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -184,93 +138,56 @@
             </div>
         </div>
         <div class="flex overflow-x-auto gap-6 px-4 sm:px-10 pb-8 scrollbar-hide snap-x snap-mandatory">
-            <!-- Project 1 -->
-            <div class="min-w-[85vw] sm:min-w-[45vw] md:min-w-[35vw] snap-center group cursor-pointer">
-                <div class="overflow-hidden rounded-lg mb-6">
-                    <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                        data-alt="Minimalist coffee brand packaging design with geometric patterns"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGYBs9gbGLF0bz5nAUWdeKHICAjLlkhpN0_5tNRfBOwiN54tHB5etn11ao3XcKG8WA5VhMEwzog2YUuM4Sk1iNTKbcDJObU4F18rm_JiHx-XRrXmrcANK38_eq4XyxsTk4JgAGcrcqT4usinXUWG2YVUHW8WwdC_rp0PmewsjbY6Q4a49NJaHU9gnof5X6AvP_wfdNxUoEWN3LX3W5igTKzt0PpzLIRNfmwgWdWHd--SPbKc74aq9H9uWq_7kSip4oToDVj9SvWJk');">
+            @forelse ($projects as $project)
+                <div class="min-w-[85vw] sm:min-w-[45vw] md:min-w-[35vw] snap-center group cursor-pointer">
+                    <div class="overflow-hidden rounded-lg mb-6">
+                        <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            data-alt="{{ $project->title }}"
+                            style="background-image: url('{{ $project->cover_image }}');">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">{{ $project->title }}
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 font-medium">{{ $project->content }}</p>
+                        </div>
+                        <span
+                            class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">
+                            {{ optional($project->published_at)->format('Y') }}
+                        </span>
                     </div>
                 </div>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">Urban Coffee
-                        </h3>
-                        <p class="text-gray-500 dark:text-gray-400 font-medium">E-commerce Platform</p>
-                    </div>
-                    <span
-                        class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">2023</span>
+            @empty
+                <div class="min-w-full text-center text-gray-500">
+                    No projects available yet.
                 </div>
-            </div>
-            <!-- Project 2 -->
-            <div class="min-w-[85vw] sm:min-w-[45vw] md:min-w-[35vw] snap-center group cursor-pointer">
-                <div class="overflow-hidden rounded-lg mb-6">
-                    <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                        data-alt="Modern fintech mobile app interface dashboard on dark background"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxmFr_Gmfqez06oRMCHVTnTokddgLvrPDyNiA1wEBrq5rnET1e9GJRcz9wSYavpFusCfKDXbN-xXO-InmnKxP7WqBkRlLjAfP_ki_2eS2aiF2yIxoY51GOzWycST31s68GeyAlKRGxRV2Ab77RZtXRvbCzNkGhp8UtdT8YlQdD4N-5D4MbZJiYcEAqz8JUOj3EuDt4lzHPCPEV78_4eBG7VeZDwiwU6wSMmbo0DJj18BVOR8OOR3L_AovrpDnLW_lCr9n7UM-_3u8');">
-                    </div>
-                </div>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">Nexus App</h3>
-                        <p class="text-gray-500 dark:text-gray-400 font-medium">SaaS Application</p>
-                    </div>
-                    <span
-                        class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">2023</span>
-                </div>
-            </div>
-            <!-- Project 3 -->
-            <div class="min-w-[85vw] sm:min-w-[45vw] md:min-w-[35vw] snap-center group cursor-pointer">
-                <div class="overflow-hidden rounded-lg mb-6">
-                    <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                        data-alt="Sleek corporate stationery mockup with solar energy branding"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdKBT62QGIebVuVe3X6ajSrVX2GVk1OkxrIsb2RX6LgW2MQoSJfUEVsUvcRz0pZ9aYPNS26gE-9MSQLwhCpeB3JRu1U0oxbobH0R72sS8ZH6oB_83TpFMJYZvdDfVpxAdpaDPOOMS5RaCD5BQmVtpwXQ2hnElY8VN5EgTNJfDfkt1YKpahl0CafWgXYeB2CISMuogtHCDKhOBb2G-cet4JfB8Pwh_-XDB8OvEQkuWIAMceY-g29a-hDhEvf64nRuJTh5JXwSf-pHw');">
-                    </div>
-                </div>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">Solaris Identity
-                        </h3>
-                        <p class="text-gray-500 dark:text-gray-400 font-medium">Corporate Branding</p>
-                    </div>
-                    <span
-                        class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">2022</span>
-                </div>
-            </div>
-            <!-- Project 4 -->
-            <div class="min-w-[85vw] sm:min-w-[45vw] md:min-w-[35vw] snap-center group cursor-pointer">
-                <div class="overflow-hidden rounded-lg mb-6">
-                    <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                        data-alt="Fashion editorial website layout on laptop screen"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAy0InDnJC99EhV3KRxYCLhXP_JjOqluJ233N9VkU84L_n5bFBIt7vKCUAVYOI_CDmlJk9leuhDLpxLI32ETMur00kz-S3JZCNcScUscVsERP-eT61r1QIos-gNk6IjT5MSMDNJViPEKRrcTIdhkQtvRVMYuC68ylRnWIfjFc3WjbZ6KKX83pH7OUJJyIdzfl9cHESiE6AtfoUTS0N6mdz860nHie3Pu5cNrh5GDcIhbh40ve_rHj2k7lIsxalcfVkGGZtpZXSP-rA');">
-                    </div>
-                </div>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">Vogue Style</h3>
-                        <p class="text-gray-500 dark:text-gray-400 font-medium">Web Design</p>
-                    </div>
-                    <span
-                        class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">2022</span>
-                </div>
-            </div>
+            @endforelse
         </div>
     </section>
     <!-- Stats Section -->
-    <section class="py-20 bg-black text-white dark:bg-white dark:text-black">
+    <section class="py-20 bg-black text-white dark:bg-white dark:text-black" data-stats>
         <div class="max-w-7xl mx-auto px-4 sm:px-10">
             <div
                 class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800 dark:divide-gray-200">
                 <div class="p-6">
-                    <p class="text-primary dark:text-gray-600 text-6xl md:text-7xl font-bold mb-2">150+</p>
+                    <p class="text-primary dark:text-gray-600 text-6xl md:text-7xl font-bold mb-2"
+                        data-counter
+                        data-target="150"
+                        data-suffix="+">0+</p>
                     <p class="text-lg font-medium tracking-wide">Happy Clients</p>
                 </div>
                 <div class="p-6">
-                    <p class="text-primary dark:text-gray-600 text-6xl md:text-7xl font-bold mb-2">300+</p>
+                    <p class="text-primary dark:text-gray-600 text-6xl md:text-7xl font-bold mb-2"
+                        data-counter
+                        data-target="300"
+                        data-suffix="+">0+</p>
                     <p class="text-lg font-medium tracking-wide">Projects Completed</p>
                 </div>
                 <div class="p-6">
-                    <p class="text-primary dark:text-gray-600 text-6xl md:text-7xl font-bold mb-2">5</p>
+                    <p class="text-primary dark:text-gray-600 text-6xl md:text-7xl font-bold mb-2"
+                        data-counter
+                        data-target="5">0</p>
                     <p class="text-lg font-medium tracking-wide">Years Experience</p>
                 </div>
             </div>
@@ -295,9 +212,15 @@
                             </p>
                         </div>
                         <div class="flex items-center gap-4">
-                            <div class="size-12 rounded-full bg-gray-300 bg-cover bg-center"
-                                style="background-image: url('{{ $testimonial->avatar_url }}');">
-                            </div>
+                            @if ($testimonial->avatar_url)
+                                <div class="size-12 rounded-full bg-gray-300 bg-cover bg-center"
+                                    style="background-image: url('{{ $testimonial->avatar_url }}');">
+                                </div>
+                            @else
+                                <div class="size-12 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold text-gray-700">
+                                    {{ strtoupper(substr($testimonial->author_name, 0, 2)) }}
+                                </div>
+                            @endif
                             <div>
                                 <p class="font-bold text-sm">{{ $testimonial->author_name }}</p>
                                 <p class="text-xs text-gray-500">{{ $testimonial->author_title }}</p>
@@ -312,4 +235,5 @@
             </div>
         </div>
     </section>
+    <script src="{{ asset('js/stats-counter.js') }}" defer></script>
 </x-layouts.base>
