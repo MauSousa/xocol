@@ -7,12 +7,14 @@ use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\InquiriesController;
 
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('home');
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::post('/inquiries', [InquiriesController::class, 'store'])->name('inquiries.store');
 
 
 

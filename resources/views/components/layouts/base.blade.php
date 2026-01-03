@@ -81,42 +81,7 @@
     </header>
 
     {{ $slot }}
-    <!-- Footer CTA Section -->
-    <section
-        class="py-32 px-4 sm:px-10 bg-background-light dark:bg-background-dark border-t border-[#e9e8ce] dark:border-[#3a392a]">
-        <div class="max-w-4xl mx-auto text-center flex flex-col items-center gap-10">
-            <h2 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
-                READY TO <span class="bg-primary px-2 text-black italic">SCALE?</span>
-            </h2>
-            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl">
-                Let's build something extraordinary together. Start your project with XOCOL today.
-            </p>
-            <button
-                class="group relative inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-black transition-all duration-200 bg-primary rounded-full hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary overflow-hidden">
-                <span class="relative z-10 flex items-center gap-2">
-                    Start a Project
-                    <span
-                        class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </span>
-                <div
-                    class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-white/20">
-                </div>
-            </button>
-        </div>
-        <div
-            class="max-w-7xl mx-auto mt-32 border-t border-gray-200 dark:border-gray-800 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2 font-bold text-xl">
-                <div class="size-6 bg-black dark:bg-white rounded-full"></div>
-                XOCOL
-            </div>
-            <div class="flex gap-8 text-sm font-medium text-gray-500">
-                <a class="hover:text-black dark:hover:text-white transition-colors" href="#">Instagram</a>
-                <a class="hover:text-black dark:hover:text-white transition-colors" href="#">LinkedIn</a>
-                <a class="hover:text-black dark:hover:text-white transition-colors" href="#">Twitter</a>
-            </div>
-            <p class="text-sm text-gray-400">© 2024 XOCOL Agency. All rights reserved.</p>
-        </div>
-    </section>
+    <x-footer-cta-form />
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -134,3 +99,4 @@
 </body>
 
 </html>
+
