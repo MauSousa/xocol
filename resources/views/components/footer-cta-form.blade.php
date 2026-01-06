@@ -45,13 +45,6 @@
         </p>
 
         <div class="w-full max-w-3xl text-left">
-            @if (session('success'))
-                <div
-                    class="mb-6 rounded-2xl border border-primary/40 bg-primary/10 px-6 py-4 text-sm font-medium text-black">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             @if ($errors->any())
                 <div
                     class="mb-6 rounded-2xl border border-red-400/60 bg-red-500/10 px-6 py-4 text-sm text-red-600 dark:text-red-400">
@@ -64,7 +57,7 @@
                 </div>
             @endif
 
-            {{ $resolvedAction }}
+
             <form class="w-full" action="{{ $resolvedAction }}" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -161,3 +154,36 @@
         <p class="text-sm text-gray-400">ЖИ 2024 XOCOL Agency. All rights reserved.</p>
     </div>
 </section>
+
+@if (session('success'))
+    <div
+        class="fixed top-6 right-6 z-50 flex max-w-sm items-start gap-4 rounded-2xl border border-primary/40 bg-primary/10 px-5 py-4 text-sm font-medium text-black shadow-lg backdrop-blur"
+        role="status"
+        aria-live="polite"
+        id="cta-success-toast">
+        <span class="material-symbols-outlined text-black">check_circle</span>
+        <div class="flex-1">{{ session('success') }}</div>
+        <button
+            class="rounded-full p-1 text-black/70 hover:text-black transition"
+            type="button"
+            aria-label="Close notification"
+            data-toast-close>
+            <span class="material-symbols-outlined text-base">close</span>
+        </button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toast = document.getElementById("cta-success-toast");
+            if (!toast) return;
+
+            const closeButton = toast.querySelector("[data-toast-close]");
+            const hideToast = () => toast.remove();
+
+            if (closeButton) {
+                closeButton.addEventListener("click", hideToast);
+            }
+
+            setTimeout(hideToast, 6000);
+        });
+    </script>
+@endif

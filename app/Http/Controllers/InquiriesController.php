@@ -13,8 +13,8 @@ class InquiriesController extends Controller
     {
         $inquiry = Inquiry::create($request->validated());
 
-        // Mail::to(config('mail.from.address'))
-        //     ->send(new InquirySubmitted($inquiry));
+        Mail::to('delivered@resend.dev')
+            ->send(new InquirySubmitted($inquiry));
 
         return back()->with('success', 'Thanks! We will contact you soon.');
     }
