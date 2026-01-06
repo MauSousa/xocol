@@ -85,18 +85,50 @@
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const carousel = document.querySelector("[data-hero-carousel]");
-            if (!carousel || typeof Glide === "undefined") return;
+            if (typeof Glide === "undefined") return;
 
-            new Glide(carousel, {
-                type: "carousel",
-                autoplay: 5000,
-                animationDuration: 700,
-                hoverpause: true,
-            }).mount();
+            const carousel = document.querySelector("[data-hero-carousel]");
+            if (carousel) {
+                new Glide(carousel, {
+                    type: "carousel",
+                    autoplay: 5000,
+                    animationDuration: 700,
+                    hoverpause: true,
+                }).mount();
+            }
+
+            const servicesCarousel = document.querySelector("[data-services-carousel]");
+            if (servicesCarousel) {
+                new Glide(servicesCarousel, {
+                    type: "carousel",
+                    perView: 4,
+                    gap: 16,
+                    animationDuration: 600,
+                    hoverpause: true,
+                    breakpoints: {
+                        1280: { perView: 3 },
+                        1024: { perView: 2 },
+                        640: { perView: 1 },
+                    },
+                }).mount();
+            }
+
+            const workCarousel = document.querySelector("[data-work-carousel]");
+            if (workCarousel) {
+                new Glide(workCarousel, {
+                    type: "carousel",
+                    perView: 3,
+                    gap: 24,
+                    animationDuration: 600,
+                    hoverpause: true,
+                    breakpoints: {
+                        1280: { perView: 2 },
+                        768: { perView: 1 },
+                    },
+                }).mount();
+            }
         });
     </script>
 </body>
 
 </html>
-

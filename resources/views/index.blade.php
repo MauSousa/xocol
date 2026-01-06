@@ -87,82 +87,115 @@
     <!-- Services Section -->
     <section class="py-24 px-4 sm:px-10 bg-white dark:bg-[#1a190b]">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-                <div class="max-w-2xl">
-                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Our Expertise</h2>
-                    <p class="text-gray-600 dark:text-gray-400 text-lg">Comprehensive creative solutions designed to
-                        help your business grow and dominate your market.</p>
+            <div class="glide" data-services-carousel>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+                    <div class="max-w-2xl">
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Our Expertise</h2>
+                        <p class="text-gray-600 dark:text-gray-400 text-lg">Comprehensive creative solutions designed to
+                            help your business grow and dominate your market.</p>
+                    </div>
+                    <div class="flex items-center gap-3" data-glide-el="controls">
+                        <button
+                            class="size-11 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                            type="button"
+                            aria-label="Previous service"
+                            data-glide-dir="<">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button
+                            class="size-11 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                            type="button"
+                            aria-label="Next service"
+                            data-glide-dir=">">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
                 </div>
-                <a class="group flex items-center gap-2 text-base font-bold border-b-2 border-primary pb-1"
-                    href="#">
-                    All Services
-                    <span
-                        class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
-                </a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                @forelse ($services as $service)
-                    <div
-                        class="group relative p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                        <div
-                            class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
-                            <span class="material-symbols-outlined">{{ $service->icon ?? 'star' }}</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">{{ $service->name }}</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">{{ $service->description }}</p>
-                        <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
-                        </div>
+                <div class="glide__track" data-glide-el="track">
+                    <div class="glide__slides gap-4">
+                        @forelse ($services as $service)
+                            <div class="glide__slide">
+                                <div
+                                    class="group relative h-full p-8 rounded-lg bg-background-light dark:bg-background-dark border border-[#e9e8ce] dark:border-[#3a392a] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                    <div
+                                        class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-black dark:text-primary mb-6 group-hover:bg-primary group-hover:text-black transition-colors">
+                                        <span class="material-symbols-outlined">{{ $service->icon ?? 'star' }}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3">{{ $service->name }}</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">{{ $service->description }}</p>
+                                    <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <span class="material-symbols-outlined text-primary dark:text-primary">arrow_outward</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="glide__slide">
+                                <div class="text-center text-gray-500 py-12">
+                                    No services available yet.
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
-                @empty
-                    <div class="col-span-full text-center text-gray-500">
-                        No services available yet.
-                    </div>
-                @endforelse
+                </div>
             </div>
         </div>
     </section>
     <!-- Work Carousel Section -->
     <section class="py-24 overflow-hidden bg-background-light dark:bg-background-dark">
-        <div class="px-4 sm:px-10 mb-12 flex items-center justify-between max-w-7xl mx-auto w-full">
-            <h2 class="text-4xl font-bold tracking-tight">Selected Work</h2>
-            <div class="hidden sm:flex gap-2">
-                <button
-                    class="size-12 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
-                    <span class="material-symbols-outlined">arrow_back</span>
-                </button>
-                <button
-                    class="size-12 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
-                    <span class="material-symbols-outlined">arrow_forward</span>
-                </button>
+        <div class="glide" data-work-carousel>
+            <div class="px-4 sm:px-10 mb-12 flex items-center justify-between max-w-7xl mx-auto w-full">
+                <h2 class="text-4xl font-bold tracking-tight">Selected Work</h2>
+                <div class="hidden sm:flex gap-2" data-glide-el="controls">
+                    <button
+                        class="size-12 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                        type="button"
+                        aria-label="Previous project"
+                        data-glide-dir="<">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    <button
+                        class="size-12 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                        type="button"
+                        aria-label="Next project"
+                        data-glide-dir=">">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="flex overflow-x-auto gap-6 px-4 sm:px-10 pb-8 scrollbar-hide snap-x snap-mandatory">
-            @forelse ($projects as $project)
-                <div class="min-w-[85vw] sm:min-w-[45vw] md:min-w-[35vw] snap-center group cursor-pointer">
-                    <div class="overflow-hidden rounded-lg mb-6">
-                        <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                            data-alt="{{ $project->title }}"
-                            style="background-image: url('{{ $project->cover_image }}');">
+            <div class="glide__track px-4 sm:px-10 pb-8" data-glide-el="track">
+                <div class="glide__slides gap-6">
+                    @forelse ($projects as $project)
+                        <div class="glide__slide">
+                            <div class="group cursor-pointer">
+                                <div class="overflow-hidden rounded-lg mb-6">
+                                    <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                                        data-alt="{{ $project->title }}"
+                                        style="background-image: url('{{ $project->cover_image }}');">
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
+                                            {{ $project->title }}
+                                        </h3>
+                                        <p class="text-gray-500 dark:text-gray-400 font-medium">{{ $project->content }}</p>
+                                    </div>
+                                    <span
+                                        class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">
+                                        {{ optional($project->published_at)->format('Y') }}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">{{ $project->title }}
-                            </h3>
-                            <p class="text-gray-500 dark:text-gray-400 font-medium">{{ $project->content }}</p>
+                    @empty
+                        <div class="glide__slide">
+                            <div class="text-center text-gray-500 py-12">
+                                No projects available yet.
+                            </div>
                         </div>
-                        <span
-                            class="text-xs font-bold border border-gray-300 dark:border-gray-700 px-3 py-1 rounded-full">
-                            {{ optional($project->published_at)->format('Y') }}
-                        </span>
-                    </div>
+                    @endforelse
                 </div>
-            @empty
-                <div class="min-w-full text-center text-gray-500">
-                    No projects available yet.
-                </div>
-            @endforelse
+            </div>
         </div>
     </section>
     <!-- Stats Section -->
