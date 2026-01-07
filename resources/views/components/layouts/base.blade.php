@@ -1,6 +1,11 @@
+@props([
+    'theme' => 'light',
+    'bodyClass' => '',
+])
+
 <!DOCTYPE html>
 
-<html class="light" lang="en">
+<html class="{{ $theme }}" lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -54,10 +59,13 @@
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark text-[#1c1c0d] dark:text-[#fcfcf8] font-display overflow-x-hidden selection:bg-primary selection:text-black">
+    class="bg-background-light dark:bg-background-dark text-[#1c1c0d] dark:text-[#fcfcf8] font-display overflow-x-hidden selection:bg-primary selection:text-black {{ $bodyClass }}">
     <!-- Top Navigation -->
     <header
         class="fixed top-0 z-50 w-full px-4 sm:px-10 py-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-sm border-b border-[#e9e8ce] dark:border-[#3a392a]">
+        @php
+            $projectsHref = \Illuminate\Support\Facades\Route::has('projects') ? route('projects') : '#';
+        @endphp
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div
@@ -69,7 +77,7 @@
             <nav class="hidden md:flex items-center gap-8">
                 <a class="text-sm font-medium hover:text-primary transition-colors duration-200"
                     href="#">Services</a>
-                <a class="text-sm font-medium hover:text-primary transition-colors duration-200" href="#">Work</a>
+                <a class="text-sm font-medium hover:text-primary transition-colors duration-200" href="{{ $projectsHref }}">Work</a>
                 <a class="text-sm font-medium hover:text-primary transition-colors duration-200"
                     href="#">About</a>
             </nav>
