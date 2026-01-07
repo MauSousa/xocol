@@ -37,9 +37,10 @@ class ProjectController extends Controller
         unset($validated['services']);
 
         $coverImage = $request->file('cover_image');
+        $gridImage = $request->file('grid_image');
         $galleryImages = $request->file('gallery_images', []);
 
-        $this->projectService->create($validated, $coverImage, $galleryImages, $serviceIds);
+        $this->projectService->create($validated, $coverImage, $gridImage, $galleryImages, $serviceIds);
 
         return redirect()->route('admin.projects.index')
             ->with('success', 'Proyecto creado correctamente.');
@@ -64,12 +65,14 @@ class ProjectController extends Controller
         unset($validated['services'], $validated['existing_gallery_images'], $validated['remove_gallery_images']);
 
         $coverImage = $request->file('cover_image');
+        $gridImage = $request->file('grid_image');
         $galleryImages = $request->file('gallery_images', []);
 
         $this->projectService->update(
             $project,
             $validated,
             $coverImage,
+            $gridImage,
             $galleryImages,
             $serviceIds,
             $existingGalleryImages,

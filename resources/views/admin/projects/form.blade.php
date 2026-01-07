@@ -77,6 +77,35 @@
         </div>
 
         <div class="mb-4">
+            <label for="grid_image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen del grid</label>
+            @if (isset($project) && !empty($project->grid_image))
+                <div class="mt-2 mb-3">
+                    <img src="{{ $project->grid_image }}" alt="Imagen del grid" class="w-40 h-auto rounded">
+                </div>
+            @endif
+            <input type="file" name="grid_image" id="grid_image"
+                   class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100
+                   file:mr-4 file:py-2 file:px-4
+                   file:rounded-md file:border-0
+                   file:text-sm file:font-semibold
+                   file:bg-indigo-600 file:text-white
+                   hover:file:bg-indigo-700">
+        </div>
+
+        <div class="mb-4">
+            <label for="grid_image_size" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tamaño del grid</label>
+            <select name="grid_image_size" id="grid_image_size"
+                    class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm
+                    focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700
+                    text-gray-900 dark:text-gray-100 py-2">
+                <option value="">Selecciona un tamaño</option>
+                <option value="1" {{ old('grid_image_size', $project->grid_image_size ?? '') == 1 ? 'selected' : '' }}>Tamaño 1</option>
+                <option value="2" {{ old('grid_image_size', $project->grid_image_size ?? '') == 2 ? 'selected' : '' }}>Tamaño 2</option>
+                <option value="3" {{ old('grid_image_size', $project->grid_image_size ?? '') == 3 ? 'selected' : '' }}>Tamaño 3</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
             <label for="gallery_images" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Galeria de imagenes</label>
             <input type="file" name="gallery_images[]" id="gallery_images" multiple
                    class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100

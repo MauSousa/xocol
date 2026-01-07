@@ -21,6 +21,8 @@ class Project extends Model
         'is_featured',
         'views_count',
         'likes_count',
+        'grid_image',
+        'grid_image_size',
     ];
 
     protected $casts = [

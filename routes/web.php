@@ -4,17 +4,20 @@ use App\Http\Controllers\Settings;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HeroSlideController;
-use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\InquiriesController;
+use App\Http\Controllers\ProjectController;
 
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('home');
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::view('/projects', 'projects')->name('projects');
+
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+
 Route::post('/inquiries', [InquiriesController::class, 'store'])->name('inquiries.store');
 
 
@@ -35,7 +38,7 @@ Route::prefix('admin')
     Route::delete('hero-slides/{heroSlide}', [HeroSlideController::class, 'destroy'])->name('hero_slides.destroy');
 
     Route::resource('services', ServiceController::class)->except(['show']);
-    Route::resource('projects', ProjectController::class)->except(['show']);
+    Route::resource('projects', AdminProjectController::class)->except(['show']);
     Route::resource('testimonials', TestimonialController::class)->except(['show']);
 
 });
