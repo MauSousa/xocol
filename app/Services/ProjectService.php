@@ -22,16 +22,23 @@ class ProjectService
     public function create(
         array $data,
         ?UploadedFile $coverImage = null,
+        ?UploadedFile $gridImage = null,
         array $galleryImages = [],
         array $serviceIds = []
     ): Project {
         $payload = $this->normalizePayload($data);
         $storedCover = null;
+        $storedGridImage = null;
         $storedGallery = [];
 
         if ($coverImage) {
             $storedCover = $this->storeImage($coverImage, 'projects/cover');
             $payload['cover_image'] = $storedCover;
+        }
+
+        if ($gridImage) {
+            $storedGridImage = $this->storeImage($gridImage, 'projects/grid');
+            $payload['grid_image'] = $storedGridImage;
         }
 
         if ($galleryImages) {
@@ -48,6 +55,7 @@ class ProjectService
             });
         } catch (\Throwable $exception) {
             $this->deleteImage($storedCover);
+            $this->deleteImage($storedGridImage);
             $this->deleteImages($storedGallery);
 
             throw $exception;
@@ -58,6 +66,7 @@ class ProjectService
         Project $project,
         array $data,
         ?UploadedFile $coverImage = null,
+        ?UploadedFile $gridImage = null,
         array $galleryImages = [],
         array $serviceIds = [],
         array $existingGalleryImages = [],
@@ -65,11 +74,17 @@ class ProjectService
     ): Project {
         $payload = $this->normalizePayload($data, $project);
         $storedCover = null;
+        $storedGridImage = null;
         $storedGallery = [];
 
         if ($coverImage) {
             $storedCover = $this->storeImage($coverImage, 'projects/cover');
             $payload['cover_image'] = $storedCover;
+        }
+
+        if ($gridImage) {
+            $storedGridImage = $this->storeImage($gridImage, 'projects/grid');
+            $payload['grid_image'] = $storedGridImage;
         }
 
         $currentGalleryImages = $existingGalleryImages ?: ($project->gallery_images ?? []);
@@ -78,6 +93,7 @@ class ProjectService
         $payload['gallery_images'] = array_values(array_merge($filteredGalleryImages, $storedGallery));
 
         $oldCover = $project->cover_image;
+        $oldGridImage = $project->grid_image;
         $toRemoveGallery = $removeGalleryImages;
 
         try {
@@ -89,6 +105,7 @@ class ProjectService
             });
         } catch (\Throwable $exception) {
             $this->deleteImage($storedCover);
+            $this->deleteImage($storedGridImage);
             $this->deleteImages($storedGallery);
 
             throw $exception;
@@ -96,6 +113,10 @@ class ProjectService
 
         if ($storedCover) {
             $this->deleteImage($oldCover);
+        }
+
+        if ($storedGridImage) {
+            $this->deleteImage($oldGridImage);
         }
 
         if ($toRemoveGallery) {
@@ -125,6 +146,7 @@ class ProjectService
             'title',
             'slug',
             'content',
+            'grid_image_size',
             'published_at',
             'is_active',
             'is_featured',

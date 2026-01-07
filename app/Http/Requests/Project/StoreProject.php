@@ -26,6 +26,8 @@ class StoreProject extends FormRequest
             'slug' => 'nullable|string|max:255|unique:projects,slug',
             'content' => 'nullable|string',
             'cover_image' => 'nullable|image|max:5120',
+            'grid_image' => 'nullable|image|max:5120',
+            'grid_image_size' => 'nullable|in:1,2,3',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|max:5120',
             'published_at' => 'nullable|date',
