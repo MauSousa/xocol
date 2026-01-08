@@ -70,15 +70,24 @@
     <section class="sticky top-[72px] z-40 bg-background-dark/95 backdrop-blur-md border-b border-[#3a392a]">
         <div class="max-w-7xl mx-auto px-4 sm:px-10 py-4">
             <div class="flex flex-wrap gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                <button
-                    class="px-5 py-2.5 rounded-full bg-primary text-black text-sm font-bold transition-all shadow-[0_0_12px_rgba(249,245,6,0.3)]">
+                {{-- ALL --}}
+                <a href="{{ route('projects.index') }}"
+                class="px-5 py-2.5 rounded-full text-sm font-bold transition-all
+                {{ empty($activeService)
+                        ? 'bg-primary text-black shadow-[0_0_12px_rgba(249,245,6,0.3)]'
+                        : 'border border-[#3a392a] bg-black/20 text-gray-300 hover:text-primary hover:border-primary/50' }}">
                     All
-                </button>
+                </a>
+
+                {{-- SERVICES --}}
                 @foreach ($services as $service)
-                    <button
-                        class="px-5 py-2.5 rounded-full border border-[#3a392a] bg-black/20 text-gray-300 text-sm font-medium hover:text-primary hover:border-primary/50 transition-all">
+                    <a href="{{ route('projects.index', ['service' => $service->slug]) }}"
+                    class="px-5 py-2.5 rounded-full text-sm font-medium transition-all
+                    {{ ($activeService === $service->slug)
+                            ? 'bg-primary text-black shadow-[0_0_12px_rgba(249,245,6,0.3)]'
+                            : 'border border-[#3a392a] bg-black/20 text-gray-300 hover:text-primary hover:border-primary/50' }}">
                         {{ $service->name }}
-                    </button>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -128,6 +137,11 @@
                 @endforelse
             </div>
             <div class="flex justify-center mt-12">
+                {{-- TODO: Integrar paginador (diseño)
+                    <div>
+                        {{ $projects->links() }}
+                    </div>
+                --}}
                 <button
                     class="flex items-center gap-3 text-gray-400 font-semibold hover:text-primary transition-colors group">
                     <span class="material-symbols-outlined text-2xl group-hover:animate-bounce">expand_more</span>
