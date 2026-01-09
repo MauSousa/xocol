@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalle de Proyecto - XOCOL</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&amp;family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ccff00", // Neon Lime Green as requested
+                        "secondary": "#ff4500", // Burnt Orange option, keeping primary dominant
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#0a0a0a", // Darker black for higher contrast
+                        "surface-dark": "#1a1a1a",
+                        "text-main": "#ffffff",
+                        "text-muted": "#a3a3a3"
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"}, // More sharp/minimalist
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1a1a1a] dark:text-text-main font-body antialiased overflow-x-hidden selection:bg-primary selection:text-black">
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<header class="fixed top-0 z-50 w-full backdrop-blur-md bg-background-light/90 dark:bg-background-dark/80 border-b border-white/10 transition-all duration-300">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-5 md:px-10 lg:px-40 flex justify-center">
+<div class="layout-content-container flex w-full max-w-[1200px] items-center justify-between py-5">
+<div class="flex items-center gap-4 cursor-pointer group">
+<div class="size-8 text-primary transition-transform group-hover:rotate-12 duration-500">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M7.24189 26.4066C7.31369 26.4411 7.64204 26.5637 8.52504 26.3738C9.59462 26.1438 11.0343 25.5311 12.7183 24.4963C14.7583 23.2426 17.0256 21.4503 19.238 19.238C21.4503 17.0256 23.2426 14.7583 24.4963 12.7183C25.5311 11.0343 26.1438 9.59463 26.3738 8.52504C26.5637 7.64204 26.4411 7.31369 26.4066 7.24189C26.345 7.21246 26.143 7.14535 25.6664 7.1918C24.9745 7.25925 23.9954 7.5498 22.7699 8.14278C20.3369 9.32007 17.3369 11.4915 14.4142 14.4142C11.4915 17.3369 9.32007 20.3369 8.14278 22.7699C7.5498 23.9954 7.25925 24.9745 7.1918 25.6664C7.14534 26.143 7.21246 26.345 7.24189 26.4066ZM29.9001 10.7285C29.4519 12.0322 28.7617 13.4172 27.9042 14.8126C26.465 17.1544 24.4686 19.6641 22.0664 22.0664C19.6641 24.4686 17.1544 26.465 14.8126 27.9042C13.4172 28.7617 12.0322 29.4519 10.7285 29.9001L21.5754 40.747C21.6001 40.7606 21.8995 40.931 22.8729 40.7217C23.9424 40.4916 25.3821 39.879 27.0661 38.8441C29.1062 37.5904 31.3734 35.7982 33.5858 33.5858C35.7982 31.3734 37.5904 29.1062 38.8441 27.0661C39.879 25.3821 40.4916 23.9425 40.7216 22.8729C40.931 21.8995 40.7606 21.6001 40.747 21.5754L29.9001 10.7285ZM29.2403 4.41187L43.5881 18.7597C44.9757 20.1473 44.9743 22.1235 44.6322 23.7139C44.2714 25.3919 43.4158 27.2666 42.252 29.1604C40.8128 31.5022 38.8165 34.012 36.4142 36.4142C34.012 38.8165 31.5022 40.8128 29.1604 42.252C27.2666 43.4158 25.3919 44.2714 23.7139 44.6322C22.1235 44.9743 20.1473 44.9757 18.7597 43.5881L4.41187 29.2403C3.29027 28.1187 3.08209 26.5973 3.21067 25.2783C3.34099 23.9415 3.8369 22.4852 4.54214 21.0277C5.96129 18.0948 8.43335 14.7382 11.5858 11.5858C14.7382 8.43335 18.0948 5.9613 21.0277 4.54214C22.4852 3.8369 23.9415 3.34099 25.2783 3.21067C26.5973 3.08209 28.1187 3.29028 29.2403 4.41187Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-display font-bold leading-tight tracking-wider">XOCOL</h2>
+</div>
+<div class="hidden md:flex items-center gap-12">
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium uppercase tracking-widest" href="#">Proyectos</a>
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium uppercase tracking-widest" href="#">Servicios</a>
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium uppercase tracking-widest" href="#">Agencia</a>
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium uppercase tracking-widest" href="#">Contacto</a>
+</div>
+<button class="hidden md:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden h-10 px-6 bg-primary text-black text-sm font-bold uppercase tracking-wide hover:bg-white transition-all duration-300">
+<span class="truncate">Cotizar</span>
+</button>
+<div class="md:hidden text-white cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 mt-20">
+<div class="px-5 md:px-10 lg:px-40 flex justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+<div class="@container mb-20 relative">
+<div class="relative z-20 flex flex-col gap-8 pb-12 pt-24 md:pt-32">
+<div class="flex flex-col gap-4 max-w-4xl">
+<div class="flex items-center gap-3">
+<span class="h-[1px] w-12 bg-primary"></span>
+<span class="text-primary font-display font-bold tracking-[0.2em] text-xs uppercase">Case Study</span>
+</div>
+<h1 class="text-white text-5xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter uppercase">
+                                TechFlow<br/><span class="text-white/40">Rebranding</span>
+</h1>
+</div>
+</div>
+<div class="relative w-full aspect-video md:aspect-[21/9] overflow-hidden group shadow-2xl border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat transform transition-transform duration-1000 scale-105 group-hover:scale-100" data-alt="Abstract futuristic digital wave background with neon green and dark tones representing fintech data flow" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAh21q76S4wF8tZuI4uwq4wELbtI6tjbVmDGS4PJkSdBtX1KhewAol8yFNERU4fq9C9moBJljmNGQRsbG5dKeQjU3KUafh5D8NaP-to-FNc9IkXIJxBBiwxnUQAb51Vmc5F48DZyNdXcYnWQ-vr3MxtZjBhxtOLs6uBCnPI7KmWBgbgzf2Q0j9g2OkmgKoxTeeAuXGhDgy-LYBv-O1i1DaqUTHMTWYAxbsyiI07syy22j6ncUjrz37R8wRonRX5hJzlzfyczgDru0s");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 py-10 border-t border-white/10 mb-24">
+<div class="flex flex-col gap-2 border-l border-white/10 pl-6">
+<p class="text-text-muted text-xs font-mono uppercase tracking-widest">Servicios</p>
+<p class="text-white text-sm font-medium leading-relaxed">Branding<br/>UX/UI Design<br/>Web Development</p>
+</div>
+<div class="flex flex-col gap-2 border-l border-white/10 pl-6">
+<p class="text-text-muted text-xs font-mono uppercase tracking-widest">Cliente</p>
+<p class="text-white text-lg font-display font-bold">TechFlow Inc.</p>
+</div>
+<div class="flex flex-col gap-2 border-l border-white/10 pl-6">
+<p class="text-text-muted text-xs font-mono uppercase tracking-widest">Año</p>
+<p class="text-white text-lg font-display font-bold">2023</p>
+</div>
+<div class="flex flex-col gap-2 border-l border-white/10 pl-6">
+<p class="text-text-muted text-xs font-mono uppercase tracking-widest">Industria</p>
+<p class="text-white text-lg font-display font-bold">Fintech / Crypto</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-16 mb-24 items-start">
+<div class="md:w-1/3 sticky top-32">
+<h3 class="text-4xl text-white font-display font-bold leading-none tracking-tight">El<br/>Desafío</h3>
+<div class="w-12 h-1 bg-primary mt-6"></div>
+</div>
+<div class="md:w-2/3">
+<p class="text-text-muted text-xl font-light leading-relaxed mb-8">
+                            TechFlow se acercó a XOCOL con un problema de percepción: su tecnología era vanguardista, pero su imagen parecía atrapada en la era de las dot-com de los 90. Necesitaban una identidad que comunicara velocidad, seguridad y, sobre todo, futuro.
+                        </p>
+<p class="text-text-muted text-xl font-light leading-relaxed">
+                            El desafío consistía en modernizar la identidad visual para reflejar su posición líder en el mercado de criptomonedas, sin alienar a sus usuarios institucionales más conservadores.
+                        </p>
+</div>
+</div>
+<div class="w-full mb-24 overflow-hidden border border-white/5 relative group">
+<div class="w-full h-[600px] bg-center bg-no-repeat bg-cover transform transition-transform duration-[2s] ease-out group-hover:scale-105" data-alt="Close up of a mobile phone screen displaying the dark mode dashboard of the TechFlow app with neon charts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2qBbxLbAFiyvVLXprOfMQaS-KE24dsIsGDKLy-jYoU5MAscTlO4cev5BFrxG6UgpOKfTW7ZWpKmcargWKA7FENhkCdkNo0UFhkxGC6voujvTeTizRzERNoWhMCKEBxZbFnGvr9Ps6zfJ6IhmuYbwnyWf-_FwQLyFwJH-iM_-jCZRidMCGU75C5w_n2a16LghmPAmweaRzgGCUmuZhY1QfT_sPKXYKEl5WBYwXvx3QNasOr7FNsq45JyBLCGODvbK4A2lCtcgHZ14");'>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-16 mb-24 items-start">
+<div class="md:w-1/3 sticky top-32">
+<h3 class="text-4xl text-white font-display font-bold leading-none tracking-tight">La<br/>Solución</h3>
+<div class="w-12 h-1 bg-primary mt-6"></div>
+</div>
+<div class="md:w-2/3">
+<p class="text-text-muted text-xl font-light leading-relaxed mb-12">
+                            Desarrollamos un sistema de diseño modular <span class="text-white font-medium">"The Flow System"</span> que escala a través de plataformas web y móviles. Utilizamos una paleta oscura profunda (Void Black) contrastada con acentos de neón (Cyber Lime) para denotar innovación y energía.
+                        </p>
+<blockquote class="relative border-l-2 border-primary pl-8 my-12">
+<p class="italic text-2xl text-white font-display font-light leading-snug">
+                                "XOCOL no solo rediseñó nuestro logo, transformó cómo el mundo percibe nuestra tecnología. El resultado es simplemente eléctrico."
+                            </p>
+<footer class="mt-6 flex items-center gap-3">
+<div class="w-8 h-[1px] bg-white/20"></div>
+<span class="text-sm text-primary font-bold uppercase tracking-wider">Sarah Jenkins, CTO TechFlow</span>
+</footer>
+</blockquote>
+<p class="text-text-muted text-xl font-light leading-relaxed">
+                            La tipografía elegida, una sans-serif geométrica con cortes agresivos, refuerza la idea de precisión matemática, fundamental en el mundo del blockchain.
+                        </p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
+<div class="w-full h-[500px] bg-surface-dark overflow-hidden relative group">
+<div class="absolute inset-0 bg-center bg-cover bg-no-repeat transition-all duration-700 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0" data-alt="Stationery mockup branding set including business cards and letterhead with TechFlow logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjcohXh7D3LlgDaagOsBgbm-t1GEa34by8ZYMmi-CATWxCD0wvLlqr4Kx6X5xm7Zp1ME05y8nfkARpWo5RnfQygotSbsLCtxM6z8Np9ykGRW9CzA3a8w1dy4MCg5I_agqZ4sYx9ZlXJ-6Nz4LDrOiflDgrHPlNUBGs8bRxxzj6_b9zQdQqadwYihcg-rrWRMTDjsVKbfEgr1i2Gc15AwUVRlYof7bDpY-bRSazryx3U_DlhnHWqX6iXVHhANnik-oUDGfvB8htr6Y");'>
+</div>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<span class="border border-primary text-primary px-4 py-2 uppercase text-xs tracking-widest font-bold bg-black/50 backdrop-blur-sm">Stationery</span>
+</div>
+</div>
+<div class="w-full h-[500px] bg-surface-dark overflow-hidden relative group">
+<div class="absolute inset-0 bg-center bg-cover bg-no-repeat transition-all duration-700 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0" data-alt="Modern laptop displaying the landing page design of TechFlow website" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDOANQXoaY2jSOjDwI4ir4lPxiqMY1uLzvffgAt967-JO0vy0ntrhjEL12kLvgOTpMWi-345lKSZR8B5ZxJn7FhyPnXxHl4gQnzjZ0Wrtdv38P3A_yfMBJfNmjfX27HM0POrAN3Qghm1b6YnpVDqX7I0x0jSE5aifmcRsKJd5LF1Rh8MCQugD3UD45pcSHpxmimkKBW-2bEjgsl9XvMYF5j4TcCnk7yWjsWdzz2JES4qzGqHkMzssi-DwKJgTOYgR6SosUPJlRK4D4");'>
+</div>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<span class="border border-primary text-primary px-4 py-2 uppercase text-xs tracking-widest font-bold bg-black/50 backdrop-blur-sm">Web Design</span>
+</div>
+</div>
+<div class="w-full h-[600px] md:col-span-2 bg-surface-dark overflow-hidden relative group">
+<div class="absolute inset-0 bg-center bg-cover bg-no-repeat transition-all duration-700 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0" data-alt="Large outdoor billboard advertising mockup showing TechFlow branding in a city environment" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCNEiIRcAT3Ysu45yTLe-9d88vkYQFJRiASqHS-ZK5wGgnN5LL4_cGmXdsmyDUT3vxDwpQ4VGQdNA3tLN77taB_6y5LqYyKK-IKUCRPLBmBjTk44e6I_K1xNOSvM5Y-IEZmvJ1UbTFRLBwCGBRJO1eNoo_huEocIoAvbGbcUfumaJOSO5658ngY8E11NDx9UJpa6ia8tCgmCQpDYq0X0lTpeLsgIalHJpY_33iEKJqEhDe8SpK-NSurHqgtMSRdn917HM10vD467c4");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-10">
+<div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Outdoor</p>
+<p class="text-white text-2xl font-display font-bold">Aplicación en Exteriores</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between py-10 border-y border-white/10 mb-32 bg-surface-dark/30 px-8 backdrop-blur-sm">
+<div class="flex gap-12 mb-6 md:mb-0">
+<div class="flex items-center gap-3 text-text-muted">
+<span class="material-symbols-outlined text-[24px]">visibility</span>
+<div class="flex flex-col">
+<span class="text-white text-lg font-bold leading-none">2.4k</span>
+<span class="text-[10px] uppercase tracking-wider font-bold">Vistas</span>
+</div>
+</div>
+<button class="flex items-center gap-3 text-text-muted hover:text-primary transition-colors group">
+<span class="material-symbols-outlined text-[24px] group-hover:fill-current transition-colors">favorite</span>
+<div class="flex flex-col text-left">
+<span class="text-white text-lg font-bold leading-none group-hover:text-primary transition-colors">142</span>
+<span class="text-[10px] uppercase tracking-wider font-bold">Likes</span>
+</div>
+</button>
+</div>
+<div class="flex items-center gap-6">
+<span class="text-text-muted text-xs font-bold uppercase tracking-widest">Compartir</span>
+<div class="flex gap-4">
+<a class="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 text-sm font-bold" href="#">in</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 text-sm font-bold" href="#">fb</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 text-sm font-bold" href="#">x</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-12">
+<div class="flex flex-col md:flex-row justify-between items-end gap-4 pb-4 border-b border-white/10">
+<h2 class="text-white text-4xl md:text-5xl font-display font-bold uppercase tracking-tighter">Siguiente<br/>Proyecto</h2>
+<a class="text-white text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors flex items-center gap-2 group mb-2" href="#">
+                            Ver todos los proyectos
+                            <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<a class="group flex flex-col gap-4" href="#">
+<div class="w-full aspect-[3/4] overflow-hidden bg-surface-dark relative">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" data-alt="Minimalist skincare product packaging in pastel colors" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd0X8O3GI9nDVhGBvInnPgE2ft-xw40RwogDOyXyuJ4nbeLpCzSDWXGq8p4CGbcvzB8Zg3kkUlYQmUXmjt0rVFpj-fs1zZ6doA51oNPnqqD2O5DA85CLG5MXlTGj2SgAcEm6xpIaSWhQngRNvwBGoqLkCqCp4EsKvSiLdEe7iXm_WQBksGrmo-fneNmmPJtEk2tdYK8W6oQ5uh8CyJ0xlxzbXcF10PsJpKXrYIWQXh4hXoz9gIoPZR5uPNbbOhuUYHwufTsAUz7vU");'>
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+<div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">Branding</div>
+</div>
+<div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
+<h3 class="text-white text-xl font-display font-bold uppercase tracking-wide group-hover:text-primary transition-colors">Aura Skincare</h3>
+<p class="text-text-muted text-sm mt-1">Packaging &amp; Strategy</p>
+</div>
+</a>
+<a class="group flex flex-col gap-4" href="#">
+<div class="w-full aspect-[3/4] overflow-hidden bg-surface-dark relative">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" data-alt="Dark moody interior design photography for an architecture firm portfolio" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmaqHuTHkvhjR-qfVTyRkhCWFLaWVOqpDnFFqT_uHvriJN1UlUn2zeZ7qd7GqqXZx4oF_2hLrVeytMbl6XwPGutuVDcLfbn0H-8yR-niVgecXi292spUiLsr7gLKYPVeiLh0E-aVpv8Ka5Dt_KsqghoX0p_vlNUi3YPWDtZ4druW_sD9JFeUGs4V65E0IZ3D3lsPndKtyq20v0EDZst-iKj1RnogvAiGPByss4Nfh-pwAEm5KTNHwfLNodYtGve4TNW_eGmhO_-EM");'>
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+<div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">Web</div>
+</div>
+<div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
+<h3 class="text-white text-xl font-display font-bold uppercase tracking-wide group-hover:text-primary transition-colors">Mono Architects</h3>
+<p class="text-text-muted text-sm mt-1">Web Design</p>
+</div>
+</a>
+<a class="group flex flex-col gap-4" href="#">
+<div class="w-full aspect-[3/4] overflow-hidden bg-surface-dark relative">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" data-alt="Neon sign in a restaurant window at night reflecting in wet pavement" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdqp_qBUfct-F7qlF9kjvfn7tuEuHMdgLzlPY4b1LmriOWF_2QBI86e5mYwYyDnoH9U_k5Iy5YyN24nG_binSpSbyXuSYxcsexy_HsQu8Kb70VK_AYKdCmfq8qRVSb387KrE6cAhoF-I-gKvsK9sE398jfNuJwQ9jAKlpKiG15xyk0jCVvuri8kgbdyP4Pdyl_--JBxQvM3PDt4reRvrotmXPNcR2TkEOw8bdzJkNenu4D03BEHZv-gJ00UNS-ezWXT9j1BSgwJls");'>
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+<div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">Event</div>
+</div>
+<div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
+<h3 class="text-white text-xl font-display font-bold uppercase tracking-wide group-hover:text-primary transition-colors">Neon Nights</h3>
+<p class="text-text-muted text-sm mt-1">Event Branding</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full py-12 mt-12 border-t border-white/10 bg-background-dark">
+<div class="layout-container flex flex-col items-center justify-center gap-8">
+<div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold">XOCOL</h2>
+</div>
+<div class="flex gap-8">
+<a class="text-text-muted hover:text-white text-sm font-medium transition-colors" href="#">Instagram</a>
+<a class="text-text-muted hover:text-white text-sm font-medium transition-colors" href="#">Behance</a>
+<a class="text-text-muted hover:text-white text-sm font-medium transition-colors" href="#">LinkedIn</a>
+</div>
+<div class="text-center text-text-muted text-xs uppercase tracking-widest">
+<p>© 2024 XOCOL Agency. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

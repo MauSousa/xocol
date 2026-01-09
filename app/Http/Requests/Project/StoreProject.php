@@ -35,6 +35,15 @@ class StoreProject extends FormRequest
             'is_featured' => 'nullable|boolean',
             'services' => 'nullable|array',
             'services.*' => 'integer|exists:services,id',
+            'blocks' => 'nullable|array',
+            'blocks.*.id' => 'nullable|integer',
+            'blocks.*.type' => 'required_with:blocks|string|in:heading,rich_text,image',
+            'blocks.*.data' => 'nullable|array',
+            'blocks.*.data.text' => 'nullable|string',
+            'blocks.*.data.html' => 'nullable|string',
+            'blocks.*.data.alt' => 'nullable|string|max:255',
+            'blocks.*.existing_image' => 'nullable|string',
+            'blocks.*.image' => 'nullable|image|max:5120',
         ];
     }
 }

@@ -41,4 +41,13 @@ class ProjectController extends Controller
             'activeService' => $serviceSlug,
         ]);
     }
+
+    public function show(Project $project): View
+    {
+        $project->load(['services', 'blocks']);
+
+        return view('project', [
+            'project' => $project,
+        ]);
+    }
 }

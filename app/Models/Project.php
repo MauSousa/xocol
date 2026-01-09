@@ -36,4 +36,9 @@ class Project extends Model
     {
         return $this->belongsToMany(Service::class)->withTimestamps();
     }
+
+    public function blocks()
+    {
+        return $this->hasMany(ProjectBlock::class)->orderBy('id');
+    }
 }

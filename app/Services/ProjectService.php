@@ -24,12 +24,16 @@ class ProjectService
         ?UploadedFile $coverImage = null,
         ?UploadedFile $gridImage = null,
         array $galleryImages = [],
-        array $serviceIds = []
+        array $serviceIds = [],
+        array $blocks = [],
+        array $blockFiles = []
     ): Project {
         $payload = $this->normalizePayload($data);
         $storedCover = null;
         $storedGridImage = null;
         $storedGallery = [];
+        $storedBlockImages = [];
+        $blocksPayload = $this->prepareBlocks($blocks, $blockFiles, $storedBlockImages);
 
         if ($coverImage) {
             $storedCover = $this->storeImage($coverImage, 'projects/cover');
@@ -47,9 +51,12 @@ class ProjectService
         }
 
         try {
-            return DB::transaction(function () use ($payload, $serviceIds) {
+            return DB::transaction(function () use ($payload, $serviceIds, $blocksPayload) {
                 $project = Project::create($payload);
                 $project->services()->sync($serviceIds);
+                if ($blocksPayload) {
+                    $project->blocks()->createMany($blocksPayload);
+                }
 
                 return $project;
             });
@@ -57,6 +64,7 @@ class ProjectService
             $this->deleteImage($storedCover);
             $this->deleteImage($storedGridImage);
             $this->deleteImages($storedGallery);
+            $this->deleteImages($storedBlockImages);
 
             throw $exception;
         }
@@ -70,12 +78,18 @@ class ProjectService
         array $galleryImages = [],
         array $serviceIds = [],
         array $existingGalleryImages = [],
-        array $removeGalleryImages = []
+        array $removeGalleryImages = [],
+        array $blocks = [],
+        array $blockFiles = []
     ): Project {
         $payload = $this->normalizePayload($data, $project);
         $storedCover = null;
         $storedGridImage = null;
         $storedGallery = [];
+        $storedBlockImages = [];
+        $project->load('blocks');
+        $oldBlockImages = $this->getBlockImageUrls($project->blocks);
+        $blocksPayload = $this->prepareBlocks($blocks, $blockFiles, $storedBlockImages);
 
         if ($coverImage) {
             $storedCover = $this->storeImage($coverImage, 'projects/cover');
@@ -97,19 +111,24 @@ class ProjectService
         $toRemoveGallery = $removeGalleryImages;
 
         try {
-            $updatedProject = DB::transaction(function () use ($project, $payload, $serviceIds) {
-                $project->update($payload);
-                $project->services()->sync($serviceIds);
+        $updatedProject = DB::transaction(function () use ($project, $payload, $serviceIds, $blocksPayload) {
+            $project->update($payload);
+            $project->services()->sync($serviceIds);
+            $project->blocks()->delete();
+            if ($blocksPayload) {
+                $project->blocks()->createMany($blocksPayload);
+            }
 
-                return $project;
-            });
-        } catch (\Throwable $exception) {
-            $this->deleteImage($storedCover);
-            $this->deleteImage($storedGridImage);
-            $this->deleteImages($storedGallery);
+            return $project;
+        });
+    } catch (\Throwable $exception) {
+        $this->deleteImage($storedCover);
+        $this->deleteImage($storedGridImage);
+        $this->deleteImages($storedGallery);
+        $this->deleteImages($storedBlockImages);
 
-            throw $exception;
-        }
+        throw $exception;
+    }
 
         if ($storedCover) {
             $this->deleteImage($oldCover);
@@ -123,13 +142,21 @@ class ProjectService
             $this->deleteImages($toRemoveGallery);
         }
 
+        $newBlockImages = $this->getBlockImageUrls($blocksPayload);
+        $blockImagesToRemove = array_values(array_diff($oldBlockImages, $newBlockImages));
+        if ($blockImagesToRemove) {
+            $this->deleteImages($blockImagesToRemove);
+        }
+
         return $updatedProject;
     }
 
     public function delete(Project $project): void
     {
+        $project->load('blocks');
         $coverImage = $project->cover_image;
         $galleryImages = $project->gallery_images ?? [];
+        $blockImages = $this->getBlockImageUrls($project->blocks);
 
         DB::transaction(function () use ($project) {
             $project->services()->detach();
@@ -138,6 +165,7 @@ class ProjectService
 
         $this->deleteImage($coverImage);
         $this->deleteImages($galleryImages);
+        $this->deleteImages($blockImages);
     }
 
     private function normalizePayload(array $data, ?Project $project = null): array
@@ -183,6 +211,91 @@ class ProjectService
         }
 
         return $images;
+    }
+
+    private function prepareBlocks(array $blocks, array $blockFiles, array &$storedImages = []): array
+    {
+        $prepared = [];
+
+        foreach ($blocks as $index => $block) {
+            $type = $block['type'] ?? null;
+
+            if (!$type) {
+                continue;
+            }
+
+            $data = $block['data'] ?? [];
+
+            if ($type === 'heading') {
+                $text = trim((string) ($data['text'] ?? ''));
+                if ($text === '') {
+                    continue;
+                }
+                $prepared[] = [
+                    'type' => $type,
+                    'data' => ['text' => $text],
+                ];
+                continue;
+            }
+
+            if ($type === 'rich_text') {
+                $html = trim((string) ($data['html'] ?? $data['text'] ?? ''));
+                if ($html === '') {
+                    continue;
+                }
+                $prepared[] = [
+                    'type' => $type,
+                    'data' => ['html' => $html],
+                ];
+                continue;
+            }
+
+            if ($type === 'image') {
+                $alt = trim((string) ($data['alt'] ?? ''));
+                $existingImage = $block['existing_image'] ?? ($data['url'] ?? null);
+                $imageFile = $blockFiles[$index]['image'] ?? null;
+
+                $imagePath = null;
+                if ($imageFile instanceof UploadedFile) {
+                    $imagePath = $this->storeImage($imageFile, 'projects/blocks');
+                    $storedImages[] = $imagePath;
+                } elseif ($existingImage) {
+                    $imagePath = $existingImage;
+                }
+
+                if (!$imagePath) {
+                    continue;
+                }
+
+                $prepared[] = [
+                    'type' => $type,
+                    'data' => [
+                        'url' => $imagePath,
+                        'alt' => $alt,
+                    ],
+                ];
+            }
+        }
+
+        return $prepared;
+    }
+
+    private function getBlockImageUrls(iterable $blocks): array
+    {
+        $urls = [];
+
+        foreach ($blocks as $block) {
+            $data = $block['data'] ?? (is_object($block) ? ($block->data ?? null) : null);
+            if (!is_array($data)) {
+                continue;
+            }
+            $url = $data['url'] ?? null;
+            if ($url) {
+                $urls[] = $url;
+            }
+        }
+
+        return $urls;
     }
 
     private function generateUniqueSlug(string $title, ?Project $project = null): string

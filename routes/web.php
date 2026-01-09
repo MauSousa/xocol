@@ -17,6 +17,7 @@ Route::get('/welcome', function () {
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/project/{project}', [ProjectController::class, 'show'])->name('projects.show');
 
 Route::post('/inquiries', [InquiriesController::class, 'store'])->name('inquiries.store');
 
