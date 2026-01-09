@@ -34,13 +34,15 @@ class ProjectController extends Controller
         $validated = $request->validated();
         // dd($request->all());
         $serviceIds = $validated['services'] ?? [];
+        $blocks = $request->input('blocks', []);
+        $blockFiles = $request->file('blocks', []);
         unset($validated['services']);
 
         $coverImage = $request->file('cover_image');
         $gridImage = $request->file('grid_image');
         $galleryImages = $request->file('gallery_images', []);
 
-        $this->projectService->create($validated, $coverImage, $gridImage, $galleryImages, $serviceIds);
+        $this->projectService->create($validated, $coverImage, $gridImage, $galleryImages, $serviceIds, $blocks, $blockFiles);
 
         return redirect()->route('admin.projects.index')
             ->with('success', 'Proyecto creado correctamente.');
@@ -48,7 +50,7 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        $project->load('services');
+        $project->load(['services', 'blocks']);
         $services = Service::orderBy('name')->get();
 
         return view('admin.projects.form', compact('project', 'services'));
@@ -61,6 +63,8 @@ class ProjectController extends Controller
         $serviceIds = $validated['services'] ?? [];
         $existingGalleryImages = $validated['existing_gallery_images'] ?? [];
         $removeGalleryImages = $validated['remove_gallery_images'] ?? [];
+        $blocks = $request->input('blocks', []);
+        $blockFiles = $request->file('blocks', []);
 
         unset($validated['services'], $validated['existing_gallery_images'], $validated['remove_gallery_images']);
 
@@ -76,7 +80,9 @@ class ProjectController extends Controller
             $galleryImages,
             $serviceIds,
             $existingGalleryImages,
-            $removeGalleryImages
+            $removeGalleryImages,
+            $blocks,
+            $blockFiles
         );
 
         return redirect()->route('admin.projects.index')
