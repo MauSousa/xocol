@@ -41,4 +41,14 @@ class Project extends Model
     {
         return $this->hasMany(ProjectBlock::class)->orderBy('id');
     }
+
+    public function views()
+    {
+        return $this->hasMany(ProjectView::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(ProjectLike::class);
+    }
 }

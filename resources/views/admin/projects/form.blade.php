@@ -22,6 +22,7 @@
         </div>
     @endif
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css">
     <form
         action="{{ isset($project) ?
             route('admin.projects.update', $project) :
@@ -260,10 +261,10 @@
 
                             <div data-block-rich-text class="{{ $type === 'rich_text' ? '' : 'hidden' }}">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rich text</label>
-                                <textarea name="blocks[{{ $index }}][data][html]" rows="5"
-                                          class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm
-                                          focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700
-                                          text-gray-900 dark:text-gray-100 py-2">{{ $data['html'] ?? ($data['text'] ?? '') }}</textarea>
+                                <div class="mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm"
+                                     data-rich-text-editor></div>
+                                <textarea name="blocks[{{ $index }}][data][html]" rows="5" data-rich-text-source
+                                          class="hidden">{{ $data['html'] ?? ($data['text'] ?? '') }}</textarea>
                             </div>
 
                             <div data-block-image class="{{ $type === 'image' ? '' : 'hidden' }}">
@@ -342,10 +343,10 @@
 
                 <div data-block-rich-text class="hidden">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rich text</label>
-                    <textarea name="blocks[__INDEX__][data][html]" rows="5"
-                              class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm
-                              focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700
-                              text-gray-900 dark:text-gray-100 py-2"></textarea>
+                    <div class="mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm"
+                         data-rich-text-editor></div>
+                    <textarea name="blocks[__INDEX__][data][html]" rows="5" data-rich-text-source
+                              class="hidden"></textarea>
                 </div>
 
                 <div data-block-image class="hidden">
@@ -369,15 +370,56 @@
         </div>
     </template>
 
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const blocksContainer = document.querySelector('[data-blocks]');
             const addBlockButton = document.querySelector('[data-add-block]');
             const template = document.getElementById('block-template');
+            const quillInstances = new WeakMap();
 
             if (!blocksContainer || !addBlockButton || !template) {
                 return;
             }
+
+            const initRichText = (block) => {
+                const richText = block.querySelector('[data-block-rich-text]');
+                const editor = block.querySelector('[data-rich-text-editor]');
+                const textarea = block.querySelector('[data-rich-text-source]');
+
+                if (!richText || !editor || !textarea) {
+                    return;
+                }
+
+                if (quillInstances.has(editor)) {
+                    return;
+                }
+
+                const quill = new Quill(editor, {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            [{ color: [] }, { background: [] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            ['link', 'blockquote'],
+                            ['clean'],
+                        ],
+                    },
+                });
+
+                if (textarea.value) {
+                    quill.clipboard.dangerouslyPasteHTML(textarea.value);
+                }
+
+                quill.on('text-change', () => {
+                    const editorHtml = editor.querySelector('.ql-editor')?.innerHTML ?? '';
+                    textarea.value = editorHtml;
+                });
+
+                quillInstances.set(editor, quill);
+            };
 
             const toggleFields = (block) => {
                 const type = block.querySelector('[data-block-type]')?.value;
@@ -388,6 +430,10 @@
                 if (heading) heading.classList.toggle('hidden', type !== 'heading');
                 if (richText) richText.classList.toggle('hidden', type !== 'rich_text');
                 if (image) image.classList.toggle('hidden', type !== 'image');
+
+                if (type === 'rich_text') {
+                    initRichText(block);
+                }
             };
 
             const bindBlock = (block) => {
@@ -405,7 +451,10 @@
                 toggleFields(block);
             };
 
-            blocksContainer.querySelectorAll('[data-block]').forEach(bindBlock);
+            blocksContainer.querySelectorAll('[data-block]').forEach((block) => {
+                bindBlock(block);
+                initRichText(block);
+            });
 
             addBlockButton.addEventListener('click', () => {
                 const index = Number(blocksContainer.dataset.blockIndex || 0);
@@ -419,6 +468,7 @@
                 if (block) {
                     blocksContainer.appendChild(block);
                     bindBlock(block);
+                    initRichText(block);
                 }
             });
         });
