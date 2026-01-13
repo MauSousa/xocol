@@ -24,6 +24,56 @@
         .project-detail-page .dark\:bg-background-dark\/80 {
             background-color: rgba(10, 10, 10, 0.8) !important;
         }
+
+        .rich-text-content {
+            color: #d1d5db;
+            font-size: 1.25rem;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        .rich-text-content h1,
+        .rich-text-content h2,
+        .rich-text-content h3 {
+            color: #ffffff;
+            font-weight: 700;
+            margin: 1.75rem 0 0.75rem;
+            line-height: 1.1;
+        }
+
+        .rich-text-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        .rich-text-content ul,
+        .rich-text-content ol {
+            margin: 1.25rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .rich-text-content ul {
+            list-style: disc;
+        }
+
+        .rich-text-content ol {
+            list-style: decimal;
+        }
+
+        .rich-text-content a {
+            color: #f9f506;
+            text-decoration: underline;
+        }
+
+        .rich-text-content blockquote {
+            border-left: 4px solid #f9f506;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #e5e7eb;
+        }
+
+        .rich-text-content strong {
+            color: #ffffff;
+        }
     </style>
 
     <section class="pt-28 pb-12 px-4 sm:px-10">
@@ -35,7 +85,6 @@
                 </div>
                 <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase">
                     {{ $project->title }}<br />
-                    <span class="text-white/40">{{ $project->services->first()?->name ?? 'Case Study' }}</span>
                 </h1>
             </div>
 
@@ -94,7 +143,7 @@
                                     <h3 class="text-4xl text-white font-bold leading-none tracking-tight">{{ $blockData['text'] ?? '' }}</h3>
                                     <div class="w-12 h-1 bg-primary mt-6"></div>
                                 </div>
-                                <div class="md:w-2/3 text-gray-300 text-xl font-light leading-relaxed">
+                                <div class="md:w-2/3 rich-text-content">
                                     @if (!empty($nextData['html']))
                                         {!! $nextData['html'] !!}
                                     @elseif (!empty($nextData['text']))
@@ -112,7 +161,7 @@
                                 <div class="w-12 h-1 bg-primary mt-6"></div>
                             </div>
                         @elseif ($block->type === 'rich_text')
-                            <div class="text-gray-300 text-xl font-light leading-relaxed max-w-3xl">
+                            <div class="rich-text-content max-w-3xl">
                                 @if (!empty($blockData['html']))
                                     {!! $blockData['html'] !!}
                                 @elseif (!empty($blockData['text']))
@@ -134,6 +183,41 @@
                 </div>
             @endif
 
+            @php
+                $galleryImages = collect($project->gallery_images ?? []);
+                $galleryTop = $galleryImages->slice(0, 2);
+                $galleryHero = $galleryImages->get(2);
+                $galleryRest = $galleryImages->slice(3);
+            @endphp
+
+            @if ($galleryImages->isNotEmpty())
+                <div class="flex flex-col gap-6 mb-24">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        @foreach ($galleryTop as $image)
+                            <div class="overflow-hidden border border-white/10 rounded-2xl bg-black/40">
+                                <img src="{{ $image }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @if ($galleryHero)
+                        <div class="overflow-hidden border border-white/10 rounded-2xl bg-black/40">
+                            <img src="{{ $galleryHero }}" alt="{{ $project->title }}" class="w-full h-auto object-cover">
+                        </div>
+                    @endif
+
+                    @if ($galleryRest->isNotEmpty())
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            @foreach ($galleryRest as $image)
+                                <div class="overflow-hidden border border-white/10 rounded-2xl bg-black/40">
+                                    <img src="{{ $image }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             <div class="flex flex-col md:flex-row items-center justify-between py-10 border-y border-white/10 mb-32 bg-black/30 px-8 rounded-2xl backdrop-blur-sm">
                 <div class="flex gap-12 mb-6 md:mb-0">
                     <div class="flex items-center gap-3 text-gray-400">
@@ -143,10 +227,14 @@
                             <span class="text-[10px] uppercase tracking-wider font-bold">Vistas</span>
                         </div>
                     </div>
-                    <button class="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors group">
+                    <button class="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
+                        data-like-button
+                        data-like-url="{{ route('projects.like', $project) }}"
+                        data-liked="{{ $hasLiked ? 'true' : 'false' }}"
+                        @if ($hasLiked) disabled @endif>
                         <span class="material-symbols-outlined text-[24px] group-hover:fill-current transition-colors">favorite</span>
                         <div class="flex flex-col text-left">
-                            <span class="text-white text-lg font-bold leading-none group-hover:text-primary transition-colors">{{ number_format($project->likes_count ?? 0) }}</span>
+                            <span class="text-white text-lg font-bold leading-none group-hover:text-primary transition-colors" data-like-count>{{ number_format($project->likes_count ?? 0) }}</span>
                             <span class="text-[10px] uppercase tracking-wider font-bold">Likes</span>
                         </div>
                     </button>
@@ -170,53 +258,77 @@
                     </a>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <a class="group flex flex-col gap-4" href="#">
-                        <div class="w-full aspect-[3/4] overflow-hidden bg-black/60 relative rounded-2xl">
-                            <div
-                                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                                data-alt="Minimalist skincare product packaging in pastel colors"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd0X8O3GI9nDVhGBvInnPgE2ft-xw40RwogDOyXyuJ4nbeLpCzSDWXGq8p4CGbcvzB8Zg3kkUlYQmUXmjt0rVFpj-fs1zZ6doA51oNPnqqD2O5DA85CLG5MXlTGj2SgAcEm6xpIaSWhQngRNvwBGoqLkCqCp4EsKvSiLdEe7iXm_WQBksGrmo-fneNmmPJtEk2tdYK8W6oQ5uh8CyJ0xlxzbXcF10PsJpKXrYIWQXh4hXoz9gIoPZR5uPNbbOhuUYHwufTsAUz7vU");'>
+                    @forelse ($relatedProjects as $relatedProject)
+                        @php
+                            $relatedImage = $relatedProject->grid_image ?: $relatedProject->cover_image;
+                            $relatedCategory = $relatedProject->services->first()?->name ?? 'Project';
+                        @endphp
+                        <a class="group flex flex-col gap-4" href="{{ route('projects.show', $relatedProject) }}">
+                            <div class="w-full aspect-[3/4] overflow-hidden bg-black/60 relative rounded-2xl">
+                                <div
+                                    class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                                    data-alt="{{ $relatedProject->title }}"
+                                    style='background-image: url("{{ $relatedImage }}");'>
+                                </div>
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                                <div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">{{ $relatedCategory }}</div>
                             </div>
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                            <div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">Branding</div>
-                        </div>
-                        <div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
-                            <h3 class="text-white text-xl font-bold uppercase tracking-wide group-hover:text-primary transition-colors">Aura Skincare</h3>
-                            <p class="text-gray-400 text-sm mt-1">Packaging &amp; Strategy</p>
-                        </div>
-                    </a>
-                    <a class="group flex flex-col gap-4" href="#">
-                        <div class="w-full aspect-[3/4] overflow-hidden bg-black/60 relative rounded-2xl">
-                            <div
-                                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                                data-alt="Dark moody interior design photography for an architecture firm portfolio"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmaqHuTHkvhjR-qfVTyRkhCWFLaWVOqpDnFFqT_uHvriJN1UlUn2zeZ7qd7GqqXZx4oF_2hLrVeytMbl6XwPGutuVDcLfbn0H-8yR-niVgecXi292spUiLsr7gLKYPVeiLh0E-aVpv8Ka5Dt_KsqghoX0p_vlNUi3YPWDtZ4druW_sD9JFeUGs4V65E0IZ3D3lsPndKtyq20v0EDZst-iKj1RnogvAiGPByss4Nfh-pwAEm5KTNHwfLNodYtGve4TNW_eGmhO_-EM");'>
+                            <div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
+                                <h3 class="text-white text-xl font-bold uppercase tracking-wide group-hover:text-primary transition-colors">{{ $relatedProject->title }}</h3>
+                                <p class="text-gray-400 text-sm mt-1">{{ $relatedProject->services->pluck('name')->join(' · ') ?: 'Project' }}</p>
                             </div>
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                            <div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">Web</div>
-                        </div>
-                        <div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
-                            <h3 class="text-white text-xl font-bold uppercase tracking-wide group-hover:text-primary transition-colors">Mono Architects</h3>
-                            <p class="text-gray-400 text-sm mt-1">Web Design</p>
-                        </div>
-                    </a>
-                    <a class="group flex flex-col gap-4" href="#">
-                        <div class="w-full aspect-[3/4] overflow-hidden bg-black/60 relative rounded-2xl">
-                            <div
-                                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                                data-alt="Neon sign in a restaurant window at night reflecting in wet pavement"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdqp_qBUfct-F7qlF9kjvfn7tuEuHMdgLzlPY4b1LmriOWF_2QBI86e5mYwYyDnoH9U_k5Iy5YyN24nG_binSpSbyXuSYxcsexy_HsQu8Kb70VK_AYKdCmfq8qRVSb387KrE6cAhoF-I-gKvsK9sE398jfNuJwQ9jAKlpKiG15xyk0jCVvuri8kgbdyP4Pdyl_--JBxQvM3PDt4reRvrotmXPNcR2TkEOw8bdzJkNenu4D03BEHZv-gJ00UNS-ezWXT9j1BSgwJls");'>
-                            </div>
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                            <div class="absolute top-4 right-4 bg-primary text-black text-[10px] font-bold px-2 py-1 uppercase opacity-0 group-hover:opacity-100 transition-opacity">Event</div>
-                        </div>
-                        <div class="flex flex-col border-t border-white/10 pt-4 group-hover:border-primary transition-colors">
-                            <h3 class="text-white text-xl font-bold uppercase tracking-wide group-hover:text-primary transition-colors">Neon Nights</h3>
-                            <p class="text-gray-400 text-sm mt-1">Event Branding</p>
-                        </div>
-                    </a>
+                        </a>
+                    @empty
+                        <div class="text-gray-400 text-sm">No hay proyectos para mostrar.</div>
+                    @endforelse
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const likeButton = document.querySelector('[data-like-button]');
+            const likeCount = document.querySelector('[data-like-count]');
+            if (!likeButton || !likeCount) return;
+
+            const csrfToken = '{{ csrf_token() }}';
+            const likeUrl = likeButton.dataset.likeUrl;
+            const hasLiked = likeButton.dataset.liked === 'true';
+
+            if (hasLiked) {
+                likeButton.classList.add('text-primary');
+            }
+
+            likeButton.addEventListener('click', async () => {
+                if (likeButton.disabled) return;
+
+                likeButton.disabled = true;
+                try {
+                    const response = await fetch(likeUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: JSON.stringify({}),
+                    });
+
+                    if (!response.ok) {
+                        likeButton.disabled = false;
+                        return;
+                    }
+
+                    const data = await response.json();
+                    if (typeof data.likes_count !== 'undefined') {
+                        likeCount.textContent = Number(data.likes_count).toLocaleString();
+                    }
+                    likeButton.classList.add('text-primary');
+                } catch (error) {
+                    likeButton.disabled = false;
+                }
+            });
+        });
+    </script>
 </x-layouts.base>

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedInteger('views_count')->default(0);
             $table->unsignedInteger('likes_count')->default(0);
+            //TODO: Add customer_name field
+            //TODO: Add industry field
             $table->timestamps();
         });
     }
